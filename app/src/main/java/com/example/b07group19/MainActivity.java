@@ -26,4 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Registration.class);
         startActivity(intent);
     }
+
+    public void onClickOwnerSignUp(View view) {
+        Intent intent = new Intent(getApplicationContext(), OwnerSignUp.class);
+        startActivity(intent);
+    }
 }

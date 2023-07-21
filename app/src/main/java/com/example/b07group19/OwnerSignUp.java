@@ -13,26 +13,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Registration extends AppCompatActivity {
+
+public class OwnerSignUp extends AppCompatActivity {
 
     FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_owner_sign_up);
         db = FirebaseDatabase.getInstance("https://b07project-c6f23-default-rtdb.firebaseio.com/");
     }
 
     public void onClickSignUp(View view){
         DatabaseReference ref= db.getReference();
-        EditText shopperUsername = (EditText) findViewById(R.id.editTextUsername);
-        EditText shopperPassword = (EditText) findViewById(R.id.editTextUserPassword);
-        String username = shopperUsername.getText().toString();
-        String userpassword = shopperPassword.getText().toString();
-        shopperUsername.setText("");
-        shopperPassword.setText("");
-        DatabaseReference query = ref.child("shoppers").child(username);
+        EditText ownerUsername = (EditText) findViewById(R.id.editTextOwnername);
+        EditText ownerPassword = (EditText) findViewById(R.id.editTextOwnerPassword);
+        String username = ownerUsername.getText().toString();
+        String userpassword = ownerPassword.getText().toString();
+        ownerUsername.setText("");
+        ownerPassword.setText("");
+        DatabaseReference query = ref.child("owners").child(username);
 
         query.addValueEventListener(new ValueEventListener() {
 
@@ -40,8 +41,8 @@ public class Registration extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 if(!snapshot.exists())
                 {
-                    ref.child("shoppers").child(username).child("username").setValue(username);
-                    ref.child("shoppers").child(username).child("password").setValue(userpassword);
+                    ref.child("owners").child(username).child("username").setValue(username);
+                    ref.child("owners").child(username).child("password").setValue(userpassword);
                 }
             }
 
