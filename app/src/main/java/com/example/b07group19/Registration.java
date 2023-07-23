@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +44,9 @@ public class Registration extends AppCompatActivity {
                 {
                     ref.child("shoppers").child(username).child("username").setValue(username);
                     ref.child("shoppers").child(username).child("password").setValue(userpassword);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Owner already exists", Toast.LENGTH_LONG ).show();
                 }
             }
 

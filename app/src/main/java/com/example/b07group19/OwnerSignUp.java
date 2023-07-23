@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +45,9 @@ public class OwnerSignUp extends AppCompatActivity {
                 {
                     ref.child("owners").child(username).child("username").setValue(username);
                     ref.child("owners").child(username).child("password").setValue(userpassword);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Shopper already exists", Toast.LENGTH_LONG ).show();
                 }
             }
 
