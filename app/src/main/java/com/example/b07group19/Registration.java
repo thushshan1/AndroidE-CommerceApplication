@@ -47,6 +47,7 @@ public class Registration extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Owner already exists", Toast.LENGTH_LONG ).show();
+                    shopperUsername.setHint("Enter new username");
                 }
             }
 

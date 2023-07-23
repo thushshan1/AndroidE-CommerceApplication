@@ -48,6 +48,7 @@ public class OwnerSignUp extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Shopper already exists", Toast.LENGTH_LONG ).show();
+                    ownerUsername.setHint("Enter new username");
                 }
             }
 
