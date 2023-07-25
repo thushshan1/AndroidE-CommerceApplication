@@ -45,9 +45,10 @@ public class OwnerSignUp extends AppCompatActivity {
                 {
                     ref.child("owners").child(username).child("username").setValue(username);
                     ref.child("owners").child(username).child("password").setValue(userpassword);
+                    Toast.makeText(getApplicationContext(), "Owner created successfully", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Shopper already exists", Toast.LENGTH_LONG ).show();
+                    Toast.makeText(getApplicationContext(), "Owner already exists", Toast.LENGTH_LONG ).show();
                     ownerUsername.setHint("Enter new username");
                 }
             }
