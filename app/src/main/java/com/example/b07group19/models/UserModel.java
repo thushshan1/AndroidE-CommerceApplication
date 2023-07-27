@@ -1,15 +1,21 @@
 package com.example.b07group19.models;
 
-public class UserModel {
-    String name;
-    String password;
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
+    public String username;
+    public String password;
 
     public UserModel(){
     }
 
-    public UserModel(String name, String password) {
-        this.name = name;
+    public UserModel(String username, String password) {
+        this.username = username;
         this.password = password;
+    }
+
+    public String toString() {
+        return username + "!!!!!";
     }
 
 }

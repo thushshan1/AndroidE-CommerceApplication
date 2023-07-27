@@ -29,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOwnerLogin(View v) {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.putExtra("userType", "owners");
+        startActivity(intent);
+    }
+
+    public void onClickShopperLogin(View v) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.putExtra("userType", "shoppers");
         startActivity(intent);
     }
 
