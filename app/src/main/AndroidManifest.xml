@@ -22,7 +22,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".shopperDashboard"
+            android:name=".ShopperDashboard"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
