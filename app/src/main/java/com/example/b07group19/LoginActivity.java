@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (!user.password.equals(password)) {
                     Toast.makeText(LoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), shopperDashboard.class);
+                    Intent intent = new Intent(getApplicationContext(), ShopperDashboard.class);
                     intent.putExtra("username", username);
                     startActivity(intent);
                     Toast.makeText(LoginActivity.this, user.toString(), Toast.LENGTH_SHORT).show();

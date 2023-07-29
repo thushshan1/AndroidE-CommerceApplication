@@ -38,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("userType", "shoppers");
         startActivity(intent);
     }
-
+    public void onClickCreateStore(View view) {
+        Intent intent = new Intent(getApplicationContext(), CreateStoreActivity.class);
+        startActivity(intent);
+    }
 
 
 }
