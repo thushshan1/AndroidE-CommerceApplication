@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 // User is a User, navigate to customerDashboard
-                                startActivity(new Intent(MainActivity.this, customerDashboardActivity.class));
+                                startActivity(new Intent(MainActivity.this, CustomerDashboardActivity.class));
                             } else {
                                 // If not found in Users, check in Owners
                                 ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.exists()) {
                                             // User is an Owner, navigate to StoreDashboard
-                                            startActivity(new Intent(MainActivity.this, storeDashboardActivity.class));
+                                            startActivity(new Intent(MainActivity.this, StoreDashboardActivity.class));
                                         } else {
                                             // User not found in either Users or Owners
                                             Toast.makeText(MainActivity.this, "User not found!", Toast.LENGTH_LONG).show();
