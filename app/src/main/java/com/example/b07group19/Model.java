@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.b07group19.models.Store;
 import com.example.b07group19.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,10 +29,12 @@ public class Model {
     private static Model instance;
     private DatabaseReference userRef;
     private FirebaseAuth auth;
+    private DatabaseReference storesRef;
 
     private Model() {
         userRef = FirebaseDatabase.getInstance().getReference("Users");
         auth = FirebaseAuth.getInstance();
+        storesRef = FirebaseDatabase.getInstance().getReference("stores");
     }
 
     public static Model getInstance() {
@@ -109,5 +112,35 @@ public class Model {
         });
 
     }
+    public void getStoreByName(String storeName, Consumer<Store> callback) {
+        storesRef.child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Store store = snapshot.getValue(Store.class);
+                callback.accept(store);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+    }
+    public void getStoreNames(Consumer<List<String>> callback) {
+        storesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> storeNames = new ArrayList<String>();
+                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
+                    Store store = userSnapShot.getValue(Store.class);
+                    storeNames.add(store.storeName);
+                }
+                callback.accept(storeNames);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+
 
 }
