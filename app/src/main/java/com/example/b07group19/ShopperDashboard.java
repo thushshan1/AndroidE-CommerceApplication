@@ -2,7 +2,9 @@ package com.example.b07group19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ShopperDashboard extends AppCompatActivity {
+import android.os.Bundle;
+
+public class shopperDashboard extends AppCompatActivity {
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {

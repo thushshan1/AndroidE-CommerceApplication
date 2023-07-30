@@ -20,5 +20,6 @@ public class UserModel implements Serializable {
         this.name = name;
         this.age = age;
     }
+
 }
 
