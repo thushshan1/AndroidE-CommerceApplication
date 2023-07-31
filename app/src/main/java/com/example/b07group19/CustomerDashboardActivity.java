@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.example.b07group19.models.Store;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,21 +24,23 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private String username;
     private List<String> storeNames;
     private ListView listViewStores;
-    private Button ShoppingCart;
+    //private Button ShoppingCart;
     private Button PreviousOrder;
     private Button Logout;
     private Model model;
+    FloatingActionButton fabCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_dashboard);
-        ShoppingCart = (Button) findViewById(R.id.btnViewCart);
+        //ShoppingCart = (Button) findViewById(R.id.btnViewCart);
         PreviousOrder = (Button) findViewById(R.id.btnViewOrders);
+        fabCart = findViewById(R.id.cart_fab);
         Logout = (Button) findViewById(R.id.btnLogout);
         username = getIntent().getStringExtra("username");
         model = Model.getInstance();
-        ShoppingCart.setOnClickListener(new View.OnClickListener() {
+        fabCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //监听按钮，如果点击，就跳转

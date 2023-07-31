@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class shopperDashboard extends AppCompatActivity {
+public class ShopperDashboard extends AppCompatActivity {
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {

@@ -129,11 +129,13 @@ public class Model {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<String> storeNames = new ArrayList<String>();
-                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
-                    Store store = userSnapShot.getValue(Store.class);
-                    storeNames.add(store.storeName);
-                }
-                callback.accept(storeNames);
+
+                storeNames.add("apple");
+//                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
+//                    Store store = userSnapShot.getValue(Store.class);
+//                    storeNames.add(store.storeName);
+//                }
+//                callback.accept(storeNames);
             }
 
             @Override
