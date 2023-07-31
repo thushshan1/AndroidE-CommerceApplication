@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddProduct">
+
+
+    <EditText
+        android:id="@+id/ProductName"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/pn"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/Price"
+        app:layout_constraintEnd_toStartOf="@id/Brand"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="145dp" />
+
+    <EditText
+        android:id="@+id/Price"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/p"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/Length"
+        app:layout_constraintEnd_toStartOf="@id/Quantity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ProductName"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="227dp" />
+
+    <EditText
+        android:id="@+id/Brand"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/B"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/Quantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ProductName"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="286dp"
+        tools:layout_editor_absoluteY="145dp" />
+
+    <EditText
+        android:id="@+id/Quantity"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/Q"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/Width"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/Price"
+        app:layout_constraintTop_toBottomOf="@id/Brand"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="229dp" />
+
+    <EditText
+        android:id="@+id/Length"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/L"
+        android:importantForAutofill="no"
+        android:inputType="number|text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/Height"
+        app:layout_constraintEnd_toStartOf="@id/Width"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Price"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="315dp" />
+
+    <EditText
+        android:id="@+id/Width"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/W"
+        android:importantForAutofill="no"
+        android:inputType="number|text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/ExtraInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/Length"
+        app:layout_constraintTop_toBottomOf="@id/Quantity"
+        tools:layout_editor_absoluteX="283dp"
+        tools:layout_editor_absoluteY="312dp" />
+
+    <EditText
+        android:id="@+id/Height"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/H"
+        android:importantForAutofill="no"
+        android:inputType="number|text"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ExtraInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Length"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="400dp" />
+
+    <EditText
+        android:id="@+id/ExtraInfo"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="@string/ei"
+        android:importantForAutofill="no"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/Height"
+        app:layout_constraintTop_toBottomOf="@id/Width"
+        tools:layout_editor_absoluteX="283dp"
+        tools:layout_editor_absoluteY="400dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/Fin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
