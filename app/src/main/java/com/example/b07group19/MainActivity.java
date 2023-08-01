@@ -139,7 +139,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.exists()) {
                                             // User is an Owner, navigate to StoreDashboard
-                                            startActivity(new Intent(MainActivity.this, StoreDashboardActivity.class));
+                                            Intent intent = new Intent(MainActivity.this, StoreDashboardActivity.class);
+                                            intent.putExtra("currentUserID", userID);
+                                            startActivity(intent);
+
                                         } else {
                                             // User not found in either Users or Owners
                                             Toast.makeText(MainActivity.this, "User not found!", Toast.LENGTH_LONG).show();
