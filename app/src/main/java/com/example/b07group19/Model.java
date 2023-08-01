@@ -82,6 +82,7 @@ public class Model {
         });
     }
 
+
     public void register(String email, String password, Consumer<String>callback) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -116,13 +117,48 @@ public class Model {
         storesRef.child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Store store = snapshot.getValue(Store.class);
-                callback.accept(store);
+                if(snapshot.exists()){
+                    Store store = snapshot.getValue(Store.class);
+                    callback.accept(store);
+                }
+                else{
+                    callback.accept(null);
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
+    }
+    public void postStore(Store store, Consumer<Boolean> callback) {
+        storesRef.child(store.storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.accept(task.isSuccessful());
+            }
+        });
+    }
+    public void getStore(){
+
+    }
+    public void getStoreByOwner(String owner, Consumer<Store> callback) {
+
+        storesRef.orderByChild("owner").equalTo(owner).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot storeSnapShot: snapshot.getChildren()) {
+                    Store store = storeSnapShot.getValue(Store.class);
+                    callback.accept(store);
+                    return;
+                }
+                // not exist
+                callback.accept(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
     public void getStoreNames(Consumer<List<String>> callback) {
         storesRef.addValueEventListener(new ValueEventListener() {
@@ -130,12 +166,12 @@ public class Model {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<String> storeNames = new ArrayList<String>();
 
-                storeNames.add("apple");
-//                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
-//                    Store store = userSnapShot.getValue(Store.class);
-//                    storeNames.add(store.storeName);
-//                }
-//                callback.accept(storeNames);
+//                storeNames.add("apple");
+                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
+                    Store store = userSnapShot.getValue(Store.class);
+                    storeNames.add(store.storeName);
+                }
+                callback.accept(storeNames);
             }
 
             @Override
