@@ -4,14 +4,14 @@ public class Product {
 
     public String product;
     public double price;
-    String brand;
+    public String brand;
     public int quantity;
     public String length;
     public String width;
     public String height;
-    public String ei;
+    public String turl;
 
-    public Product(String product, double price, String brand, int quantity, String length, String width, String height, String ei) {
+    public Product(String product, double price, String brand, int quantity, String length, String width, String height, String turl) {
         this.product = product;
         this.price = price;
         this.brand = brand;
@@ -19,7 +19,7 @@ public class Product {
         this.length = length;
         this.width = width;
         this.height = height;
-        this.ei = ei;
+        this.turl = turl;
     }
 
     public void setProduct(String product) {
@@ -50,7 +50,7 @@ public class Product {
         this.height = height;
     }
 
-    public void setEi(String ei) {
-        this.ei = ei;
+    public void setTurl(String turl) {
+        this.turl = turl;
     }
 }

@@ -11,11 +11,11 @@
         android:layout_width="120dp"
         android:layout_height="70dp"
         android:text="@string/ap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/button2"
-        tools:layout_editor_absoluteY="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -23,22 +23,12 @@
         android:layout_width="120dp"
         android:layout_height="70dp"
         android:text="@string/ep"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button"
-        app:layout_constraintBottom_toTopOf="@id/button3"
-        tools:layout_editor_absoluteY="222dp"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:text="@string/cp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button2"
-        tools:layout_editor_absoluteY="365dp"
-        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

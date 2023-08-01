@@ -22,8 +22,7 @@ public class ManageProducts extends AppCompatActivity implements View.OnClickLis
         button.setOnClickListener(this);
         button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(this);
-        button3= (Button) findViewById(R.id.button3);
-        button3.setOnClickListener(this);
+
     }
 
     @Override
@@ -31,12 +30,11 @@ public class ManageProducts extends AppCompatActivity implements View.OnClickLis
         int viewId = view.getId();
 
         if (viewId == R.id.button) {
-            startActivity(new Intent(this, AddProduct.class));;
+            startActivity(new Intent(this, AddProduct.class));
+            ;
         } else if (viewId == R.id.button2) {
-            startActivity(new Intent(this, RegisterActivity.class));
-        } else if (viewId == R.id.button3) {
+            startActivity(new Intent(this, EditProduct.class));
 
         }
-
     }
 }

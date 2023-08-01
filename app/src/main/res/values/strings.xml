@@ -10,7 +10,7 @@
     <string name="L">Length</string>
     <string name="W">Width</string>
     <string name="H">Height</string>
-    <string name="ei">Extra Information</string>
+    <string name="ei">Image URL</string>
     <string name="B">Brand</string>
     <string name="Q">Quantity</string>
     <string name="Fin">Add Product</string>
