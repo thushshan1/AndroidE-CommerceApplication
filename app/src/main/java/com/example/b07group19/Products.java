@@ -5,9 +5,9 @@ public class Products {
     String turl;
     String height;
     String length;
-    double price;
+    String price;
     String product;
-    int quantity;
+    String quantity;
     String width;
 
     String brand;
@@ -16,7 +16,7 @@ public class Products {
     {
 
     }
-    public Products(String turl, String height, String length, double price, String product, int quantity, String width, String brand) {
+    public Products(String turl, String height, String length, String price, String product, String quantity, String width, String brand) {
         this.turl = turl;
         this.height = height;
         this.length = length;
@@ -51,11 +51,11 @@ public class Products {
         this.length = length;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -67,11 +67,11 @@ public class Products {
         this.product = product;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

@@ -14,5 +14,10 @@
     <string name="B">Brand</string>
     <string name="Q">Quantity</string>
     <string name="Fin">Add Product</string>
-    <string name="Back">Back</string>
+    <string name="Edit">Edit</string>
+    <string name="Delete">Delete</string>
+    <string name="Editor">Make Changes</string>
+    <string name="Update">Update</string>
+
+
 </resources>

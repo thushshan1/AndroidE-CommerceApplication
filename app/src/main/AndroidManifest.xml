@@ -32,10 +32,19 @@
             android:name=".CustomerDashboardActivity"
             android:exported="false" />
         <activity
+            android:name=".CreateStoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ShopperDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".ManageProducts"
+            android:exported="false" />
+        <activity
+            android:name=".AddProduct"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -139,9 +139,7 @@ public class Model {
             }
         });
     }
-    public void getStore(){
 
-    }
     public void getStoreByOwner(String owner, Consumer<Store> callback) {
 
         storesRef.orderByChild("owner").equalTo(owner).addValueEventListener(new ValueEventListener() {

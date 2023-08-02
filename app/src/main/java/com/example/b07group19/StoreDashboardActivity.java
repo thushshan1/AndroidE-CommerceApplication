@@ -20,6 +20,8 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
     private Model model;
     private Store store;
 
+    public static String thename;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             }
             this.store = store;
             storeText.setText(store.storeName);
+            thename = store.storeName;
 
         });
     }

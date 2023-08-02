@@ -3,15 +3,15 @@ package com.example.b07group19;
 public class Product {
 
     public String product;
-    public double price;
+    public String price;
     public String brand;
-    public int quantity;
+    public String quantity;
     public String length;
     public String width;
     public String height;
     public String turl;
 
-    public Product(String product, double price, String brand, int quantity, String length, String width, String height, String turl) {
+    public Product(String product, String price, String brand, String quantity, String length, String width, String height, String turl) {
         this.product = product;
         this.price = price;
         this.brand = brand;
@@ -26,7 +26,7 @@ public class Product {
         this.product = product;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -34,7 +34,7 @@ public class Product {
         this.brand = brand;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
