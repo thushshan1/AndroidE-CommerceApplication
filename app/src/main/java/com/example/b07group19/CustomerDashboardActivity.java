@@ -30,6 +30,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private Model model;
     FloatingActionButton fabCart;
 
+    static public String storeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +74,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         listViewStores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String storeName = storeNames.get(i);
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerStoreView.class);
+                storeName = storeNames.get(i);
+                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerStoreView2.class);
                 intent.putExtra("storeName", storeName);
                 intent.putExtra("username", username);
                 startActivity(intent);
