@@ -96,7 +96,7 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         the = ProductName.getText().toString();
 
 
-        FirebaseDatabase.getInstance().getReference().child("stores").child(StoreDashboardActivity.thename).child("Products").child(the)
+        FirebaseDatabase.getInstance().getReference().child("stores").child(StoreDashboardActivity.thename).child("Products").push()
                 .setValue(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
