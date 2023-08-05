@@ -14,7 +14,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="80dp"
-            android:layout_height="30dp"
+            android:layout_height="48dp"
             android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"
             android:id="@+id/img2"
@@ -22,7 +22,7 @@
             app:civ_border_color="@color/black"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:id="@+id/pro"
             android:text="@string/pn"
@@ -31,6 +31,15 @@
             android:layout_toEndOf="@id/img2"
             android:layout_marginStart="10dp"
             />
+
+            <Button
+                android:id="@+id/view"
+                android:layout_width="85dp"
+                android:layout_height="48dp"
+                android:layout_toEndOf="@id/pro"
+                android:text="@string/view" />
+
+
 
     </RelativeLayout>
 

@@ -18,6 +18,8 @@
     <string name="Delete">Delete</string>
     <string name="Editor">Make Changes</string>
     <string name="Update">Update</string>
+    <string name="view">View</string>
+    <string name="view1">Product Preview</string>
 
 
 </resources>
