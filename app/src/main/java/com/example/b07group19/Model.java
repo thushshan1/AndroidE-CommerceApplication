@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.example.b07group19.models.Store;
 import com.example.b07group19.models.UserModel;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.ObservableSnapshotArray;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,19 +22,23 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Consumer;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.function.Consumer;
+
 
 public class Model {
     private static Model instance;
     private DatabaseReference userRef;
+    private DatabaseReference ownerRef;
     private FirebaseAuth auth;
     private DatabaseReference storesRef;
 
     private Model() {
         userRef = FirebaseDatabase.getInstance().getReference("Users");
+        ownerRef = FirebaseDatabase.getInstance().getReference("Owners");
         auth = FirebaseAuth.getInstance();
         storesRef = FirebaseDatabase.getInstance().getReference("stores");
     }
@@ -43,23 +49,47 @@ public class Model {
         return instance;
     }
 
-    public void authenticate(String email, String password, Consumer<UserModel> callback) {
+    public void authenticate(String email, String password, Consumer<String> callback) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
                 if (!task.isSuccessful()) {
                     callback.accept(null);
                 } else {
+
                     userRef.child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            UserModel user = snapshot.getValue(UserModel.class);
-                            callback.accept(user);
+                            // UserModel user = snapshot.getValue(UserModel.class);
+                            if (snapshot.exists())
+                                callback.accept( "user");
+                            else
+                            {
+                                // If not found in Users, check in Owners
+                                ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            // User is an Owner, navigate to StoreDashboard
+                                            callback.accept( "owner");
+                                        } else {
+                                            // User not found in either Users or Owners
+                                            callback.accept( null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        callback.accept( null);                                    }
+                                });
+                            }
+
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            callback.accept( null);
                         }
                     });
                 }
@@ -142,6 +172,30 @@ public class Model {
 
     public void getStoreByOwner(String owner, Consumer<Store> callback) {
 
+        storesRef.orderByChild("owner").equalTo(owner).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot storeSnapShot: snapshot.getChildren()) {
+                    Store store = storeSnapShot.getValue(Store.class);
+                    callback.accept(store);
+                    return;
+                }
+                // not exist
+                callback.accept(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+    public void getStoreByOwnerOption(String owner, Consumer<Store> callback) {
+        FirebaseRecyclerOptions<Products> options =
+                new FirebaseRecyclerOptions.Builder<Products>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child("fruit").child("Products"), Products.class)
+                        .build();
+        ObservableSnapshotArray<Products> mSnapshots;
+        mSnapshots = options.getSnapshots();
+        Products products=mSnapshots.get(0);
         storesRef.orderByChild("owner").equalTo(owner).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

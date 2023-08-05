@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor = preferences.edit();
         mAuth = FirebaseAuth.getInstance();
         checkSharedPreferences();
+
+        presenter = new Presenter(Model.getInstance(), this);
     }
 
     private void checkSharedPreferences() {
@@ -117,85 +119,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             edTxtPassword.requestFocus();
             return;
         }
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    final String userID = mAuth.getCurrentUser().getUid();
-                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference userRef = rootRef.child("Users").child(userID);
-                    DatabaseReference ownerRef = rootRef.child("Owners").child(userID);
 
-                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                // User is a User, navigate to customerDashboard
-                                startActivity(new Intent(MainActivity.this, CustomerDashboardActivity.class));
-                            } else {
-                                // If not found in Users, check in Owners
-                                ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.exists()) {
-                                            // User is an Owner, navigate to StoreDashboard
-                                            Intent intent = new Intent(MainActivity.this, StoreDashboardActivity.class);
-                                            intent.putExtra("currentUserID", userID);
-                                            startActivity(intent);
-
-                                        } else {
-                                            // User not found in either Users or Owners
-                                            Toast.makeText(MainActivity.this, "User not found!", Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-                    Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
-
-
-//        presenter.login(email, password);
+//        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()) {
+//                    final String userID = mAuth.getCurrentUser().getUid();
+//                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+//                    DatabaseReference userRef = rootRef.child("Users").child(userID);
+//                    DatabaseReference ownerRef = rootRef.child("Owners").child(userID);
 //
-//        model.authenticate(email, password, (UserModel user) -> {
-//            if (user == null) failedToLogin();
-//            else if (user.type.equals("owner")) redirectToStoreDashboard(user.userID);
-//            else redirectToCustomerDashboard(user.userID);
+//                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.exists()) {
+//                                // User is a User, navigate to customerDashboard
+//                                startActivity(new Intent(MainActivity.this, CustomerDashboardActivity.class));
+//                            } else {
+//                                // If not found in Users, check in Owners
+//                                ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                        if (dataSnapshot.exists()) {
+//                                            // User is an Owner, navigate to StoreDashboard
+//                                            Intent intent = new Intent(MainActivity.this, StoreDashboardActivity.class);
+//                                            intent.putExtra("currentUserID", userID);
+//                                            startActivity(intent);
+//
+//                                        } else {
+//                                            // User not found in either Users or Owners
+//                                            Toast.makeText(MainActivity.this, "User not found!", Toast.LENGTH_LONG).show();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                        Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//                            Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                } else {
+//                    Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_LONG).show();
+//                }
+//            }
 //        });
-//    }
-//
-//    public void redirectToStoreDashboard(String userID) {
-//        Intent intent = new Intent(this,StoreDashboardActivity.class);
-//        intent.putExtra("currentUserID", userID);
-//        startActivity(intent);
-//    }
-//
-//    public void redirectToCustomerDashboard(String userID) {
-//        Intent intent = new Intent(this, CustomerDashboardActivity.class);
-//        intent.putExtra("currentUserID", userID);
-//        intent.putExtra("user", new UserModel());
-//        startActivity(intent);
-//    }
-//
-//    public void failedToLogin() {
-//        Toast.makeText(this, "failed to login.", Toast.LENGTH_LONG).show();
-//    }
+        presenter.login(email, password);
 
+    }
+
+    public void redirectToStoreDashboard() {
+        Intent intent = new Intent(this,StoreDashboardActivity.class);
+        final String userID = mAuth.getCurrentUser().getUid();
+        intent.putExtra("currentUserID", userID);
+
+        startActivity(intent);
+    }
+
+    public void redirectToCustomerDashboard() {
+        Intent intent = new Intent(this, CustomerDashboardActivity.class);
+        final String userID = mAuth.getCurrentUser().getUid();
+
+        intent.putExtra("currentUserID", userID);
+
+        startActivity(intent);
+    }
+
+    public void failedToLogin() {
+        Toast.makeText(this, "failed to login.", Toast.LENGTH_LONG).show();
     }
 }
