@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,11 @@ import androidx.core.util.Consumer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class Model {
@@ -148,7 +153,10 @@ public class Model {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    Store store = snapshot.getValue(Store.class);
+                    Store store=new Store();
+                    List<Products> list = getProducts(snapshot, store);
+                    store.setInventory(list);
+//                    Store store = snapshot.getValue(Store.class);
                     callback.accept(store);
                 }
                 else{
@@ -161,6 +169,26 @@ public class Model {
         });
 
     }
+
+    @NonNull
+    private static List<Products> getProducts(@NonNull DataSnapshot snapshot, Store store) {
+        Map<String, Object> ob= (HashMap<String, Object>) snapshot.getValue();
+        store.setOwner((String) ob.get("owner"));
+        store.setStoreName((String) ob.get("storeName"));
+        Map<String, String> products=(HashMap<String, String>)ob.get("Products");
+        Set entrySet=products.entrySet();
+        Iterator it=entrySet.iterator();
+        List<Products> list=new ArrayList<>();
+        while(it.hasNext()){
+            Map.Entry entry=(Map.Entry)(it.next());
+            Gson gson = new Gson();
+            String pstring= (String)gson.toJson( entry.getValue());
+            Products value = gson.fromJson(pstring, Products.class);
+            list.add(value);
+        }
+        return list;
+    }
+
     public void postStore(Store store, Consumer<Boolean> callback) {
         storesRef.child(store.storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -176,7 +204,10 @@ public class Model {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot storeSnapShot: snapshot.getChildren()) {
-                    Store store = storeSnapShot.getValue(Store.class);
+                    Store store=new Store();
+                    List<Products> list = getProducts(storeSnapShot, store);
+                    store.setInventory(list);
+//                    Store store = storeSnapShot.getValue(Store.class);
                     callback.accept(store);
                     return;
                 }
