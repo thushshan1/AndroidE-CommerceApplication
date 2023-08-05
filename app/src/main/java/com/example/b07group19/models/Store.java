@@ -8,10 +8,34 @@ import java.util.List;
 
 public class Store implements Serializable {
     public String owner; // email
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public List<com.example.b07group19.Products> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<com.example.b07group19.Products> inventory) {
+        this.inventory = inventory;
+    }
+
     public String storeName;
 
     public List<Products> inventory;
-
     public Store() {
         inventory = new ArrayList<Products>();
     }
