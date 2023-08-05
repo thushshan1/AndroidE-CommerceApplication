@@ -60,6 +60,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 TextView wid1 = view1.findViewById(R.id.Width1);
                 TextView quan = view1.findViewById(R.id.Quantity1);
                 CircleImageView img3 = view1.findViewById(R.id.img3);
+                Button add = view1.findViewById(R.id.AddtoCart);
 
                 pro2.setText(model.getProduct());
                 bran1.setText("Brand: " + model.getBrand());
@@ -75,6 +76,13 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                         .circleCrop()
                         .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
                         .into(img3);
+
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
 
 
 

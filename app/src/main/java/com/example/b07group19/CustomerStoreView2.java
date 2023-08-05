@@ -21,7 +21,7 @@ public class CustomerStoreView2 extends AppCompatActivity {
     RecyclerView recyclerView;
     MainAdapter2 mainAdapter2;
 
-    MainAdapter3 mainAdapter3;
+
 
 
 
@@ -41,7 +41,6 @@ public class CustomerStoreView2 extends AppCompatActivity {
                         .build();
 
         mainAdapter2 = new MainAdapter2(options);
-        mainAdapter3 = new MainAdapter3(options);
         recyclerView.setAdapter(mainAdapter2);
     }
 
@@ -50,14 +49,12 @@ public class CustomerStoreView2 extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mainAdapter2.startListening();
-        mainAdapter3.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mainAdapter2.stopListening();
-        mainAdapter3.stopListening();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
