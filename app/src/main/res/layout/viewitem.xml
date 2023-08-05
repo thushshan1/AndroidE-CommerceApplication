@@ -50,33 +50,33 @@
         android:layout_height="60dp"
         android:layout_below="@id/img3"
 
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="150dp"
         android:text="@string/pn"
         android:textColor="@color/black"
         android:textSize="20sp"
-
-
         app:layout_constraintBottom_toTopOf="@+id/Price1"
         app:layout_constraintEnd_toStartOf="@+id/Brand1"
-        app:layout_constraintHorizontal_bias="0.378"
-        app:layout_constraintStart_toStartOf="@+id/recyclerView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.88" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Brand1"
         android:layout_width="120dp"
         android:layout_height="60dp"
 
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="150dp"
         android:text="@string/B"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/Height1"
+
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toEndOf="@id/nametext1"
-
         app:layout_constraintTop_toTopOf="parent"
-
-        app:layout_constraintVertical_bias="0.881" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/Price1"
@@ -84,16 +84,17 @@
 
         android:layout_height="60dp"
 
+        android:layout_marginStart="25dp"
         android:text="@string/p"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
+
 
 
         app:layout_constraintBottom_toTopOf="@+id/Width1"
-        app:layout_constraintEnd_toStartOf="@id/Height1"
-        app:layout_constraintHorizontal_bias="0.563"
 
+
+        app:layout_constraintEnd_toStartOf="@id/Height1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nametext1" />
 
@@ -103,19 +104,18 @@
 
         android:layout_height="60dp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Brand1"
-        app:layout_constraintStart_toEndOf="@id/Price1"
-        app:layout_constraintBottom_toTopOf="@+id/Length1"
-
-
+        android:layout_marginStart="25dp"
         android:text="@string/H"
         android:textColor="@color/black"
         android:textSize="20sp"
 
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="398dp" />
+
+
+        app:layout_constraintBottom_toTopOf="@+id/Length1"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toEndOf="@id/Price1"
+        app:layout_constraintTop_toBottomOf="@id/Brand1" />
 
     <TextView
         android:id="@+id/Width1"
@@ -123,18 +123,17 @@
 
         android:layout_height="60dp"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Price1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/Length1"
-
+        android:layout_marginStart="25dp"
         android:text="@string/W"
         android:textColor="@color/black"
         android:textSize="20sp"
 
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="640dp" />
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/Length1"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Price1" />
 
     <TextView
         android:id="@+id/Length1"
@@ -142,18 +141,17 @@
 
         android:layout_height="60dp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Height1"
-        app:layout_constraintStart_toEndOf="@id/Width1"
-        app:layout_constraintBottom_toBottomOf="parent"
-
+        android:layout_marginStart="25dp"
         android:text="@string/L"
         android:textColor="@color/black"
         android:textSize="20sp"
 
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="483dp" />
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toEndOf="@id/Width1"
+        app:layout_constraintTop_toBottomOf="@id/Height1" />
 
     <TextView
         android:id="@+id/Quantity1"
@@ -163,15 +161,37 @@
         android:text="@string/Q"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
 
+
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.956" />
+        app:layout_constraintVertical_bias="0.95" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="nametext1" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="nametext1" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="recyclerView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

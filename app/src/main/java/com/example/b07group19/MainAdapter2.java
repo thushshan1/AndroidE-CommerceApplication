@@ -61,7 +61,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 TextView quan = view1.findViewById(R.id.Quantity1);
                 CircleImageView img3 = view1.findViewById(R.id.img3);
 
-                pro2.setText("Product: " + model.getProduct());
+                pro2.setText(model.getProduct());
                 bran1.setText("Brand: " + model.getBrand());
                 pri1.setText("Price: $" + model.getPrice());
                 hei1.setText("Height: " + model.getHeight());
