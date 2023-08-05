@@ -1,5 +1,7 @@
 package com.example.b07group19.models;
 
+import com.example.b07group19.Products;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +10,10 @@ public class Store implements Serializable {
     public String owner; // email
     public String storeName;
 
-    public List<Product> inventory;
+    public List<Products> inventory;
 
     public Store() {
-        inventory = new ArrayList<Product>();
+        inventory = new ArrayList<Products>();
     }
 
     public Store(String storeName) {
