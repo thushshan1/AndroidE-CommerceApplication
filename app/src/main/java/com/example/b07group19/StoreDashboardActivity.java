@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.b07group19.models.Store;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class StoreDashboardActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,6 +22,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
     private Store store;
 
     public static String thename;
+    public static String storeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,9 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
 
         buttonManageProducts = (Button) findViewById(R.id.buttonManageProducts);
         buttonManageProducts.setOnClickListener(this);
-        currentUserID = getIntent().getStringExtra("currentUserID");
+        // currentUserID = getIntent().getStringExtra("currentUserID");
+        currentUserID = FirebaseAuth.getInstance().getUid();
+
         model = Model.getInstance();
         storeText = (TextView) findViewById(R.id.textViewWelcome);
         getStore();
@@ -40,7 +44,9 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         int viewId = view.getId();
 
         if (viewId == R.id.buttonManageProducts) {
-            startActivity(new Intent(this, ManageProducts.class));
+            Intent intent = new Intent(this, ManageProducts.class);
+            intent.putExtra("storeName", storeName);
+            startActivity(intent);
         }
 
 
@@ -55,7 +61,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             }
             this.store = store;
             storeText.setText(store.storeName);
-            thename = store.storeName;
+            storeName = store.storeName;
 
         });
     }

@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.b07group19.models.Order;
-import com.example.b07group19.models.Product;
+import com.example.b07group19.Products;
 import com.example.b07group19.models.Store;
 import com.example.b07group19.models.UserModel;
 
@@ -29,7 +29,7 @@ public class CustomerStoreView extends AppCompatActivity {
 
     private Model model;
 
-    private Product selectedItem;
+    private Products selectedItem;
     private TextView tvSelectedItem, tvNumberOfItems;
     private EditText edTxtSelectedQuantity;
     private Button btnCart;

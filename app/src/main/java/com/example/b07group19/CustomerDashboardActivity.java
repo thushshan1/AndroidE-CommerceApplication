@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.example.b07group19.models.Store;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,6 +33,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     static public String storeName;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         fabCart = findViewById(R.id.cart_fab);
         Logout = (Button) findViewById(R.id.btnLogout);
         username = getIntent().getStringExtra("username");
+
+        username = FirebaseAuth.getInstance().getUid();
+
+
+
         model = Model.getInstance();
+
+
+
         fabCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
