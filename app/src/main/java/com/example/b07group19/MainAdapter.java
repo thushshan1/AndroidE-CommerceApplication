@@ -101,7 +101,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
                         map.put("turl", url.getText().toString());
 
                         FirebaseDatabase.getInstance().getReference().child("stores")
-                                .child(StoreDashboardActivity.thename)
+                                .child(StoreDashboardActivity.storeName)
                                 .child("Products")
                                 .child(getRef(position).getKey()).updateChildren(map)
                                 .addOnSuccessListener(new OnSuccessListener<Void>(){
@@ -136,7 +136,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         FirebaseDatabase.getInstance().getReference().child("stores")
-                                .child(StoreDashboardActivity.thename)
+                                .child(StoreDashboardActivity.storeName)
                                 .child("Products")
                                 .child(getRef(position).getKey()).removeValue();
 

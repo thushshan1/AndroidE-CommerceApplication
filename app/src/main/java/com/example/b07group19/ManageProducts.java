@@ -13,6 +13,8 @@ public class ManageProducts extends AppCompatActivity implements View.OnClickLis
     private Button button2;
     private Button button3;
 
+    private String storeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,8 @@ public class ManageProducts extends AppCompatActivity implements View.OnClickLis
         button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(this);
 
+        storeName = getIntent().getStringExtra("storeName");
+
     }
 
     @Override
@@ -30,8 +34,10 @@ public class ManageProducts extends AppCompatActivity implements View.OnClickLis
         int viewId = view.getId();
 
         if (viewId == R.id.button) {
-            startActivity(new Intent(this, AddProduct.class));
-            ;
+            Intent intent = new Intent(this, AddProduct.class);
+            intent.putExtra("storeName", storeName);
+            startActivity(intent);
+
         } else if (viewId == R.id.button2) {
             startActivity(new Intent(this, EditProduct.class));
 
