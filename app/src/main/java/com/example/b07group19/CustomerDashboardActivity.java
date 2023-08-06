@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
+import com.example.b07group19.models.Cart;
 import com.example.b07group19.models.Store;
+import com.example.b07group19.models.UserCart;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +49,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
 
         username = FirebaseAuth.getInstance().getUid();
+        Cart cart =UserCart.getCart(username);
 
 
 

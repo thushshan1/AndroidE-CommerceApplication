@@ -15,7 +15,7 @@
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -162,7 +162,7 @@
         android:id="@+id/Quantity1"
         android:layout_width="120dp"
 
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:text="@string/Q"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -175,19 +175,69 @@
         app:layout_constraintHorizontal_bias="0.226"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.836" />
+        app:layout_constraintVertical_bias="0.77" />
+
+    <TextView
+        android:id="@+id/Count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/bg_goods_num"
+        android:hint="Count"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Quantity1" />
+
+    <TextView
+        android:id="@+id/tv_reduce_goods_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toLeftOf="@id/Count"
+        android:background="@drawable/bg_reduce_goods_num"
+        android:gravity="center"
+        android:text="—"
+        android:textColor="#000"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/Count"
+        app:layout_constraintTop_toBottomOf="@id/Quantity1" />
+
+    <TextView
+        android:id="@+id/tv_increase_goods_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_toRightOf="@+id/Count"
+        android:background="@drawable/bg_increase_goods_num"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="#000"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/Count"
+        app:layout_constraintTop_toBottomOf="@id/Quantity1" />
 
     <Button
         android:id="@+id/AddtoCart"
         android:layout_width="120dp"
         android:layout_height="60dp"
+        android:layout_marginTop="200dp"
         android:text="@string/cart"
+        app:layout_constraintBaseline_toBottomOf="@id/Quantity1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
-        app:layout_constraintStart_toEndOf="@+id/Quantity1"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toEndOf="@+id/tv_increase_goods_num"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.836" />
+        app:layout_constraintVertical_bias="0.774" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"

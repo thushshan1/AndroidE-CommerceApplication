@@ -1,16 +1,18 @@
 package com.example.b07group19;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.b07group19.models.UserCart;
+import com.example.b07group19.models.OrderItem;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -19,15 +21,16 @@ import com.orhanobut.dialogplus.ViewHolder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.myViewholder> {
-
+    String storeName;
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
      * {@link FirebaseRecyclerOptions} for configuration options.
      *
      * @param options
      */
-    public MainAdapter2(@NonNull FirebaseRecyclerOptions<Products> options) {
+    public MainAdapter2(@NonNull FirebaseRecyclerOptions<Products> options,String storeName) {
         super(options);
+        this.storeName=storeName;
     }
 
     @Override
@@ -59,6 +62,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 TextView len1 = view1.findViewById(R.id.Length1);
                 TextView wid1 = view1.findViewById(R.id.Width1);
                 TextView quan = view1.findViewById(R.id.Quantity1);
+                TextView count =view1.findViewById(R.id.Count);
                 CircleImageView img3 = view1.findViewById(R.id.img3);
                 Button add = view1.findViewById(R.id.AddtoCart);
 
@@ -80,6 +84,16 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int positi1=position;
+                        OrderItem detail = new OrderItem();
+                        detail.setPrice(model.getPrice());
+                        detail.setProductName(model.getProduct());
+                        detail.setPurl(model.getTurl());
+                        detail.setBrand(model.getBrand());
+                        detail.setCount(count.getText().toString());
+                        UserCart.addItem(storeName,detail);
+                        Toast.makeText(view.getContext(), "Added!", Toast.LENGTH_SHORT).show();
+
 
                     }
                 });
@@ -106,7 +120,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
     class myViewholder extends RecyclerView.ViewHolder{
 
         CircleImageView img2,img3;
-        TextView pro, pro1, bran, price, hei, len, wid, qual;
+        TextView pro, pro1, bran, price, hei, len, wid, qual,count;
 
         Button view;
 
@@ -125,6 +139,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
             len = (TextView)itemView.findViewById(R.id.Length1);
             wid = (TextView)itemView.findViewById(R.id.Width1);
             qual = (TextView)itemView.findViewById(R.id.Quantity1);
+            count = (TextView)itemView.findViewById(R.id.Count);
 
         }
     }
