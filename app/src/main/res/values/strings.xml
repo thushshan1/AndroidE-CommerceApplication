@@ -21,6 +21,7 @@
     <string name="view">View</string>
     <string name="view1">Product Preview</string>
     <string name="cart">Add to Cart</string>
+    <string name="checkout">Check out</string>
 
 
 </resources>

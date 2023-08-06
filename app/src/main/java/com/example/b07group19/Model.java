@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.b07group19.models.Cart;
+import com.example.b07group19.models.Order;
 import com.example.b07group19.models.Store;
 import com.example.b07group19.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -38,6 +40,7 @@ public class Model {
     private static Model instance;
     private DatabaseReference userRef;
     private DatabaseReference ownerRef;
+    private DatabaseReference orderRef;
     private FirebaseAuth auth;
     private DatabaseReference storesRef;
 
@@ -46,6 +49,8 @@ public class Model {
         ownerRef = FirebaseDatabase.getInstance().getReference("Owners");
         auth = FirebaseAuth.getInstance();
         storesRef = FirebaseDatabase.getInstance().getReference("stores");
+        orderRef = FirebaseDatabase.getInstance().getReference("orders");
+
     }
 
     public static Model getInstance() {
@@ -219,30 +224,7 @@ public class Model {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
-    public void getStoreByOwnerOption(String owner, Consumer<Store> callback) {
-        FirebaseRecyclerOptions<Products> options =
-                new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child("fruit").child("Products"), Products.class)
-                        .build();
-        ObservableSnapshotArray<Products> mSnapshots;
-        mSnapshots = options.getSnapshots();
-        Products products=mSnapshots.get(0);
-        storesRef.orderByChild("owner").equalTo(owner).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot storeSnapShot: snapshot.getChildren()) {
-                    Store store = storeSnapShot.getValue(Store.class);
-                    callback.accept(store);
-                    return;
-                }
-                // not exist
-                callback.accept(null);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-    }
     public void getStoreNames(Consumer<List<String>> callback) {
         storesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -261,6 +243,33 @@ public class Model {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+    public void saveOrders(Cart cart)
+    {
+        for (int i=0;i< cart.getOrderList().size();i++)
+        {
+            Order order = cart.getOrderList().get(i);
+            order.setStatus("pending");
+            postOrder(order, (Order ret) -> {
+                if (ret == null) {
+                    return;
+                }
+            });
+
+        }
+    }
+    public void postOrder(Order order, java.util.function.Consumer<Order> callback) {
+        String key = orderRef.push().getKey();
+        order.setOrderID(key);
+        order.setUserID(auth.getUid());
+        order.setCreateDate(DateFormat.format(Order.DATETIME_FORMAT, Calendar.getInstance()).toString());
+        orderRef.child(key).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.accept(task.isSuccessful() ? order : null);
+            }
+        });
+    }
+
 
 
 
