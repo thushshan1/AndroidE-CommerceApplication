@@ -33,8 +33,8 @@ public class OrderStatusActivity extends AppCompatActivity {
     }
 
     private void getOrders() {
-        FirebaseDatabase.getInstance().getReference("Orders")
-                .orderByChild("customer").equalTo(currentUserID)
+        FirebaseDatabase.getInstance().getReference("orders")
+                .orderByChild("userID").equalTo(currentUserID)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.example.b07group19.R;
 
 import com.example.b07group19.models.OrderDescription;
 
@@ -32,20 +33,31 @@ public class OrderDescriptionAdapter extends ArrayAdapter<OrderDescription> {
 
     }
 
-//    @NonNull
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent){
-//        String customerName = getItem(position).customerName;
-//        String createdDate = getItem(position).createdDate;
-//
-//        ViewHolder holder;
-//        if(convertView == null){
-//            LayoutInflater inflater = LayoutInflater.from(context);
-//            convertView = inflater.inflate(resource, parent, false);
-//            holder = new ViewHolder();
-//
-//            holder.tvCustomerName = (TextView) convertView.findViewById(R.layout.tv)
-//        }
-//    }
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent){
+        String customerName = getItem(position).customerName;
+        String createdDate = getItem(position).createdDate;
+
+        ViewHolder holder;
+        if(convertView == null){
+            LayoutInflater inflater = LayoutInflater.from(context);
+            convertView = inflater.inflate(resource, parent, false);
+            holder = new ViewHolder();
+
+            holder.tvCustomerName = (TextView) convertView.findViewById(R.id.tvCustomerName);
+            holder.tvCreatedDate = (TextView) convertView.findViewById(R.id.tvCreatedDate);
+
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        holder.tvCustomerName.setText(customerName);
+        holder.tvCreatedDate.setText(createdDate);
+
+        return convertView;
+    }
+
 
 }

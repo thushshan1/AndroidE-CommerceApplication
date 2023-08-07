@@ -34,7 +34,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         buttonManageProducts.setOnClickListener(this);
         // currentUserID = getIntent().getStringExtra("currentUserID");
         currentUserID = FirebaseAuth.getInstance().getUid();
-
+        buttonViewOrder = (Button) findViewById(R.id.buttonViewOrders);
 
         model = Model.getInstance();
         storeText = (TextView) findViewById(R.id.textViewWelcome);
@@ -43,7 +43,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         buttonViewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(StoreDashboardActivity.this, OrderStatusActivity.class);
+                Intent intent = new Intent(StoreDashboardActivity.this,StoreOrdersActivity.class);
                 intent.putExtra("storeName", storeName);
                 startActivity(intent);
 

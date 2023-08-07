@@ -43,15 +43,16 @@ public class StoreOrdersActivity extends AppCompatActivity {
         });
     }
 
-//    private  void getStore() {
-//        Toast.makeText(this, currentUserID, Toast.LENGTH_LONG).show();
-//        model.getStoreByOwner(currentUserID, (Store store) -> {
-//            this.store = store;
-//
-//            OrderDescriptionAdapter adapter = new OrderDescriptionAdapter()(
-//                    StoreOrdersActivity.this, R.layout.order
-//                    )
-//
-//        });
-//    }
+    private  void getStore() {
+        Toast.makeText(this, currentUserID, Toast.LENGTH_LONG).show();
+        model.getStoreByOwner(currentUserID, (Store store) -> {
+            this.store = store;
+
+            OrderDescriptionAdapter adapter = new OrderDescriptionAdapter(
+                    StoreOrdersActivity.this, R.layout.activity_order_description_adapter, store.pendingOrders);
+            lv.setAdapter(adapter);
+
+
+        });
+    }
 }
