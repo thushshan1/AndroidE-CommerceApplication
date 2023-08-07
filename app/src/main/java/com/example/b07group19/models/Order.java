@@ -1,5 +1,7 @@
 package com.example.b07group19.models;
 
+import com.example.b07group19.StoreOrdersActivity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +31,9 @@ public class Order implements Serializable {
         this.storeName = storeName;
         this.userID = userID;
         this.status = "pending";
+    }
+
+    public Order(StoreOrdersActivity storeOrdersActivity, int activity_store_orders, List<Order> pendingOrders) {
     }
 
     public String getStatus() {
