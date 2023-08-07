@@ -30,14 +30,16 @@ public class OrderDescriptionAdapter extends ArrayAdapter<OrderDescription> {
     private class ViewHolder {
         TextView tvCustomerName;
         TextView tvCreatedDate;
+        TextView tvOrderID;
 
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        String customerName = getItem(position).customerName;
-        String createdDate = getItem(position).createdDate;
+        String customerName = getItem(position).getCustomerName();
+        String createdDate = getItem(position).getCreatedDate();
+        String orderID = getItem(position).getOrderID();
 
         ViewHolder holder;
         if(convertView == null){
@@ -47,7 +49,7 @@ public class OrderDescriptionAdapter extends ArrayAdapter<OrderDescription> {
 
             holder.tvCustomerName = (TextView) convertView.findViewById(R.id.tvCustomerName);
             holder.tvCreatedDate = (TextView) convertView.findViewById(R.id.tvCreatedDate);
-
+            holder.tvOrderID = (TextView) convertView.findViewById(R.id.tvOrderID);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -55,6 +57,7 @@ public class OrderDescriptionAdapter extends ArrayAdapter<OrderDescription> {
 
         holder.tvCustomerName.setText(customerName);
         holder.tvCreatedDate.setText(createdDate);
+        holder.tvOrderID.setText(orderID);
 
         return convertView;
     }
