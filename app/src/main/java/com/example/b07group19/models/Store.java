@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Store implements Serializable {
     public String owner; // email
+    public List<OrderDescription> pendingOrders;
+    public List<OrderDescription> completedOrders;
 
     public String getOwner() {
         return owner;
@@ -38,6 +40,8 @@ public class Store implements Serializable {
     public List<Products> inventory;
     public Store() {
         inventory = new ArrayList<Products>();
+        pendingOrders = new ArrayList<OrderDescription>();
+        completedOrders = new ArrayList<OrderDescription>();
     }
 
     public Store(String storeName) {

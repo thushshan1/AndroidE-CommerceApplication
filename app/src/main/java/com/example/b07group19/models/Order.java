@@ -14,13 +14,22 @@ public class Order implements Serializable {
         items = new ArrayList<OrderItem>();
     }
 
-    private String orderID;
-    private String userID;
-    private String status;
 
-    private String storeName;
-    private List<OrderItem> items;
-    private String createDate;
+
+    public static String orderID;
+    public String userID;
+    public String status;
+
+    public String storeName;
+    public List<OrderItem> items;
+    public String createDate;
+
+    public Order(String storeName, String userID){
+        this();
+        this.storeName = storeName;
+        this.userID = userID;
+        this.status = "pending";
+    }
 
     public String getStatus() {
         return status;
@@ -46,7 +55,7 @@ public class Order implements Serializable {
         this.createDate = createDate;
     }
 
-    public String getOrderID() {
+    public static String getOrderID() {
         return orderID;
     }
 
@@ -68,6 +77,10 @@ public class Order implements Serializable {
 
     public void setItems(List<OrderItem> cartlist) {
         this.items = cartlist;
+    }
+
+    public void addItem(OrderItem orderItem){
+        items.add(orderItem);
     }
 
 

@@ -3,6 +3,7 @@ package com.example.b07group19;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.b07group19.models.Store;
 import com.example.b07group19.models.UserCart;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
+    private String currentUserID;
     private String username;
     private List<String> storeNames;
     private ListView listViewStores;
@@ -32,12 +35,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private Button PreviousOrder;
     private Button Logout;
     private Model model;
+    private Button ViewOrder;
     FloatingActionButton fabCart;
 
     static public String storeName;
 
 
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,20 +53,21 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         fabCart = findViewById(R.id.cart_fab);
         Logout = (Button) findViewById(R.id.btnLogout);
         username = getIntent().getStringExtra("username");
-
+        ViewOrder = (Button) findViewById(R.id.buttonViewOrders);
         username = FirebaseAuth.getInstance().getUid();
         Cart cart =UserCart.getCart(username);
-
+        currentUserID = getIntent().getStringExtra("currentUserID");
 
 
         model = Model.getInstance();
 
 
 
+
         fabCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //监听按钮，如果点击，就跳转
+
                 Intent intent = new Intent();
                 intent.setClass(CustomerDashboardActivity.this, ShoppingCart.class);
                 startActivity(intent);
@@ -69,18 +76,20 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //监听按钮，如果点击，就跳转
+
                 Intent intent = new Intent();
                 intent.setClass(CustomerDashboardActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
+        PreviousOrder = (Button) findViewById(R.id.btnViewOrders);
         PreviousOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //监听按钮，如果点击，就跳转
+
                 Intent intent = new Intent();
-                intent.setClass(CustomerDashboardActivity.this, PreviousOrder.class);
+                intent.putExtra("currentUserID", currentUserID);
+                intent.setClass(CustomerDashboardActivity.this, OrderStatusActivity.class);
                 startActivity(intent);
             }
         });
@@ -130,5 +139,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+
 
 }

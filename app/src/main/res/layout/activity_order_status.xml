@@ -4,44 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StoreDashboardActivity">
+    tools:context=".OrderStatusActivity">
+
 
     <TextView
-        android:id="@+id/textViewWelcome"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome, Store Owner!"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonManageProducts"
+        android:layout_marginTop="4dp"
+        android:text="Pending Orders"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonManageProducts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Manage Products"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/lvPending"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWelcome" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/buttonViewOrders"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List Pending Orders"
+        android:text="Completed Orders"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonManageProducts" />
+        app:layout_constraintTop_toBottomOf="@+id/lvPending" />
 
-    <Button
-        android:id="@+id/buttonManageInventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Manage Inventory"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/lvCompleted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonViewOrders" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

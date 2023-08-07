@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class StoreDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonManageProducts;
+    private Button buttonViewOrder;
     private TextView storeText;
     private String currentUserID;
     private Model model;
@@ -34,9 +35,22 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         // currentUserID = getIntent().getStringExtra("currentUserID");
         currentUserID = FirebaseAuth.getInstance().getUid();
 
+
         model = Model.getInstance();
         storeText = (TextView) findViewById(R.id.textViewWelcome);
         getStore();
+
+        buttonViewOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(StoreDashboardActivity.this, OrderStatusActivity.class);
+                intent.putExtra("storeName", storeName);
+                startActivity(intent);
+
+            }
+
+        }
+        );
     }
 
     //@Override
@@ -48,6 +62,13 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             intent.putExtra("storeName", storeName);
             startActivity(intent);
         }
+        if (viewId == R.id.btnViewOrders) {
+            Intent intent = new Intent(this, StoreOrdersActivity.class);
+            intent.putExtra("currentUserID", currentUserID);
+            startActivity(intent);
+        }
+
+
 
 
     }
@@ -70,4 +91,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
+
+
+
 }
