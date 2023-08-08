@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import com.example.b07group19.models.Cart;
 import com.example.b07group19.models.UserCart;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CustomerStoreView2 extends AppCompatActivity {
@@ -37,7 +38,7 @@ public class CustomerStoreView2 extends AppCompatActivity {
         UserCart.setupStoreCart(storeName);
         recyclerView = (RecyclerView)findViewById(R.id.Rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Button checkout= (Button) findViewById(R.id.checkout);
+        FloatingActionButton checkout= (FloatingActionButton) findViewById(R.id.checkout);
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -241,11 +241,30 @@ public class Model {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+    public void getUserNames(Consumer<Map<String,String>> callback) {
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String,String> userNames = new HashMap<String,String>();
+                for (DataSnapshot userSnapShot: snapshot.getChildren()) {
+
+                    UserModel user = userSnapShot.getValue(UserModel.class);
+                    userNames.put(userSnapShot.getKey(),user.name);
+                }
+                callback.accept(userNames);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
     public void saveOrders(Cart cart)
     {
         for (int i=0;i< cart.getOrderList().size();i++)
         {
             Order order = cart.getOrderList().get(i);
+            if (order.getItems().size()==0)
+                continue;
             order.setStatus("pending");
             postOrder(order, (Order ret) -> {
                 if (ret == null) {

@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class StoreOrdersActivity extends AppCompatActivity {
     private String currentUserID;
@@ -32,6 +33,8 @@ public class StoreOrdersActivity extends AppCompatActivity {
     private FirebaseListAdapter<OrderDescription> adapter;
     private ListView pending;
     private List<Order> pendingOrders;
+    Map<String,String> userNames;
+
    // private List<Order> pendingOrders;
 
 
@@ -46,7 +49,6 @@ public class StoreOrdersActivity extends AppCompatActivity {
         storeName = getIntent().getStringExtra("storeName");
 //        getStore();
         getOrders();
-
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,8 +75,8 @@ public class StoreOrdersActivity extends AppCompatActivity {
                             Order order = (Order) orderSnapshot.getValue(Order.class);
                             if (order.status.equals("pending")) pendingOrders.add(order);
                         }
-                        OrderStatusAdapter pendingAdapter =
-                                new OrderStatusAdapter(StoreOrdersActivity.this, R.layout.activity_order_status_adapter, pendingOrders);
+                        OwnerOrderAdapter pendingAdapter =
+                                new OwnerOrderAdapter(StoreOrdersActivity.this, R.layout.activity_owner_order_adapter, pendingOrders);
                         lv.setAdapter(pendingAdapter);
 
                     }
