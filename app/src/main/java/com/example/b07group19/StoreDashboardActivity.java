@@ -73,7 +73,10 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             }
             this.store = store;
             storeName = store.storeName;
-            startActivity(new Intent(this, EditProduct.class));
+            Intent intent = new Intent(this, EditProduct.class);
+
+            intent.putExtra("storeName", storeName);
+            startActivity(intent);
 
         });
     }
