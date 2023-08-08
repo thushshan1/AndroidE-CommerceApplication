@@ -33,17 +33,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
         super(options);
         this.storeName=storeName;
     }
-    OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-    //接口
-    public interface OnItemClickListener{
-        public void OnItemClick(View view,int position);
-        public void photo_addClick(@NonNull ViewHolder holder,View view,int position);
-        public void photo_downClick(@NonNull ViewHolder holder,View view,int position);
-    }
     @Override
     protected void onBindViewHolder(@NonNull myViewholder holder, int position, @NonNull Products model) {
         holder.pro.setText(model.getProduct());
@@ -109,6 +99,18 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                         int x = Integer.parseInt(count.getText().toString());
                         x++;
                         count.setText(x + "");
+                    }
+                });
+                photo_down.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int x=Integer.parseInt(count.getText().toString());
+                                if(x>1) {
+                                    x--;
+                                }
+                                else{
+                                    Toast.makeText(view.getContext(), "You already reached minimum amount", Toast.LENGTH_LONG).show();}
+                        count.setText(x+"");
                     }
                 });
                 add.setOnClickListener(new View.OnClickListener() {

@@ -54,26 +54,6 @@ public class CustomerStoreView2 extends AppCompatActivity {
 
         mainAdapter2 = new MainAdapter2(options,storeName);
         recyclerView.setAdapter(mainAdapter2);
-//        adapter.setOnItemClickListener(new MainAdapter2.OnItemClickListener() {
-//
-//            public void onClick(View view) {
-//                int x=Integer.parseInt(count.getText().toString());
-//                x++;
-//                count.setText(x+"");
-//            }
-//
-//
-//        });
-//        photo_down.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View view) {
-//                int x=Integer.parseInt(count.getText().toString());
-//                x--;
-//                count.setText(x+"");
-//            }
-//
-//
-//        });
     }
 
 

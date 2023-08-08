@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
@@ -39,6 +40,7 @@ public class ShoppingCart extends AppCompatActivity {
 
                     //clear cart of current user;
                     UserCart.clearCart();
+                    startActivity(new Intent(ShoppingCart.this, CustomerDashboardActivity.class));
 
                 } else {
                     Toast.makeText(ShoppingCart.this, "Cart is empty!Fail to check out", Toast.LENGTH_LONG).show();

@@ -55,8 +55,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         ViewOrder = (Button) findViewById(R.id.buttonViewOrders);
         username = FirebaseAuth.getInstance().getUid();
+        currentUserID = username;
         Cart cart =UserCart.getCart(username);
-        currentUserID = getIntent().getStringExtra("currentUserID");
+//        currentUserID = getIntent().getStringExtra("currentUserID");
 
 
         model = Model.getInstance();
