@@ -59,7 +59,7 @@ public class CreateStoreActivity extends AppCompatActivity {
             }
 
             Toast.makeText(CreateStoreActivity.this, "Store Created.", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, StoreDashboardActivity.class);
+            Intent intent = new Intent(this, EditProduct.class);
             intent.putExtra("currentUserID", currentUserID);
             startActivity(intent);
         });

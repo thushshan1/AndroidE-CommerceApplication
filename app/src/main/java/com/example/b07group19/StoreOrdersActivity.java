@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.b07group19.models.Order;
 import com.example.b07group19.models.OrderDescription;
@@ -55,7 +54,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String orderID = pendingOrders.get(i).getOrderID();
-                Intent intent = new Intent(StoreOrdersActivity.this, OrderDetailActivity.class);
+                Intent intent = new Intent(StoreOrdersActivity.this, OwnerOrderDetailActivity.class);
                 intent.putExtra("orderID", orderID);
                 startActivity(intent);
             }

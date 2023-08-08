@@ -46,6 +46,8 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
 
     private String storeName;
 
+    private String the2;
+
 
 
     @Override
@@ -88,7 +90,11 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         product.quantity = Quantity.getText().toString();
         product.turl = url.getText().toString();
 
-        FirebaseDatabase.getInstance().getReference("stores").child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
+        the2 = ProductName.getText().toString();
+
+
+
+        FirebaseDatabase.getInstance().getReference("stores").child(StoreDashboardActivity.storeName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                Map<String, Object> ob= (HashMap<String, Object>) snapshot.getValue();
@@ -99,7 +105,7 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                 store.products.add(product);
 
                 // save the updated store back to firebase
-                FirebaseDatabase.getInstance().getReference("stores").child(storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+                FirebaseDatabase.getInstance().getReference("stores").child(StoreDashboardActivity.storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(AddProduct.this, task.isSuccessful() ? "added" : "failed to add", Toast.LENGTH_SHORT).show();

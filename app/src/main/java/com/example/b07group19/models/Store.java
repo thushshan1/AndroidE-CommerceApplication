@@ -1,5 +1,6 @@
 package com.example.b07group19.models;
 
+import com.example.b07group19.Model;
 import com.example.b07group19.Products;
 
 import java.io.Serializable;
@@ -10,6 +11,15 @@ public class Store implements Serializable {
     public String owner; // email
 //    public List<OrderDescription> pendingOrders;
 //    public List<OrderDescription> completedOrders;
+
+
+    public Store(String owner, String storeName, List<Products> products) {
+        this.owner = owner;
+        this.storeName = storeName;
+        this.products = products;
+    }
+
+
 
     public String getOwner() {
         return owner;
