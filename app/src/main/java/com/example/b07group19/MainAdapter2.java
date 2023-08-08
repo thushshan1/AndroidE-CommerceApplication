@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,17 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
         super(options);
         this.storeName=storeName;
     }
+    OnItemClickListener onItemClickListener;
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+    //接口
+    public interface OnItemClickListener{
+        public void OnItemClick(View view,int position);
+        public void photo_addClick(@NonNull ViewHolder holder,View view,int position);
+        public void photo_downClick(@NonNull ViewHolder holder,View view,int position);
+    }
     @Override
     protected void onBindViewHolder(@NonNull myViewholder holder, int position, @NonNull Products model) {
         holder.pro.setText(model.getProduct());
@@ -43,6 +54,8 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 .circleCrop()
                 .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
                 .into(holder.img2);
+
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +67,8 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 dialogPlus.show();
 
                 View view1 = dialogPlus.getHolderView();
-
+                ImageView photo_add= view1.findViewById(R.id.photo_add);
+                ImageView photo_down= view1.findViewById(R.id.ptoto_down);
                 TextView pro2 = view1.findViewById(R.id.nametext1);
                 TextView bran1 = view1.findViewById(R.id.Brand1);
                 TextView pri1 = view1.findViewById(R.id.Price1);
@@ -81,6 +95,22 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                         .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
                         .into(img3);
 
+//                photo_add.setOnClickListener(new View.OnClickListener(){
+//                    public void onClick(View view) {
+////                int x=Integer.parseInt(count.getText().toString());
+////                x++;
+////                count.setText(x+"");
+////            }
+//
+//                });
+                photo_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int x = Integer.parseInt(count.getText().toString());
+                        x++;
+                        count.setText(x + "");
+                    }
+                });
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -121,6 +151,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
 
         CircleImageView img2,img3;
         TextView pro, pro1, bran, price, hei, len, wid, qual,count;
+        ImageView add, down;
 
         Button view;
 
@@ -140,6 +171,8 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
             wid = (TextView)itemView.findViewById(R.id.Width1);
             qual = (TextView)itemView.findViewById(R.id.Quantity1);
             count = (TextView)itemView.findViewById(R.id.Count);
+            add=(ImageView) view.findViewById(R.id.photo_add);
+            down=(ImageView) view.findViewById(R.id.ptoto_down);
 
         }
     }

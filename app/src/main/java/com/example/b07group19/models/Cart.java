@@ -35,6 +35,12 @@ public class Cart {
         orderList.clear();
         orderMap.clear();
     }
+    public boolean isEmpty()
+    {
+        if (orderList.size()==0)
+            return true;
+        return false;
+    }
     public double getTotal() {
         return total;
     }

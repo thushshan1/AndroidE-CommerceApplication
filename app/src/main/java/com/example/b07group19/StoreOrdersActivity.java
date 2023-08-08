@@ -19,17 +19,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoreOrdersActivity extends AppCompatActivity {
     private String currentUserID;
     private Store store;
+    private String storeName;
     private ListView lv;
     private Model model;
     private FirebaseListAdapter<OrderDescription> adapter;
     private ListView pending;
-    private List<OrderDescription> pendingOrders;
+    private List<Order> pendingOrders;
+   // private List<Order> pendingOrders;
 
 
     @Override
@@ -40,13 +43,16 @@ public class StoreOrdersActivity extends AppCompatActivity {
         currentUserID = getIntent().getStringExtra("currentUserID");
         model = Model.getInstance();
         lv = findViewById(R.id.lvOrders);
-        getStore();
+        storeName = getIntent().getStringExtra("storeName");
+//        getStore();
+        getOrders();
+
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String orderID = store.pendingOrders.get(i).getOrderID();
+                String orderID = pendingOrders.get(i).getOrderID();
                 Intent intent = new Intent(StoreOrdersActivity.this, OrderDetailActivity.class);
                 intent.putExtra("orderID", orderID);
                 startActivity(intent);
@@ -54,8 +60,31 @@ public class StoreOrdersActivity extends AppCompatActivity {
         });
 
     }
+    private void getOrders() {
+        FirebaseDatabase.getInstance().getReference("orders")
+                .orderByChild("storeName").equalTo(storeName)
+                .addValueEventListener(new ValueEventListener() {
 
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        pendingOrders = new ArrayList<Order>();
 
+                        for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                            Order order = (Order) orderSnapshot.getValue(Order.class);
+                            if (order.status.equals("pending")) pendingOrders.add(order);
+                        }
+                        OrderStatusAdapter pendingAdapter =
+                                new OrderStatusAdapter(StoreOrdersActivity.this, R.layout.activity_order_status_adapter, pendingOrders);
+                        lv.setAdapter(pendingAdapter);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
     private void getStore() {
 
         Toast.makeText(this, currentUserID, Toast.LENGTH_LONG).show();

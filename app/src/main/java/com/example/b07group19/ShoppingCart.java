@@ -33,11 +33,16 @@ public class ShoppingCart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //todo: generate order from cart
-                Model.getInstance().saveOrders(UserCart.getCart());
-                Toast.makeText(ShoppingCart.this, "Order created!", Toast.LENGTH_LONG).show();
+                if (!UserCart.getCart().getOrderList().isEmpty()) {
+                    Model.getInstance().saveOrders(UserCart.getCart());
+                    Toast.makeText(ShoppingCart.this, "Order created!", Toast.LENGTH_LONG).show();
 
-                //clear cart of current user;
-                UserCart.clearCart();
+                    //clear cart of current user;
+                    UserCart.clearCart();
+
+                } else {
+                    Toast.makeText(ShoppingCart.this, "Cart is empty!Fail to check out", Toast.LENGTH_LONG).show();
+                }
 
             }
         });

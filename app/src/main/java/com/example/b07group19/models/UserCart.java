@@ -14,6 +14,8 @@ import java.util.Set;
 public class UserCart {
     private static Map<String, Cart> carts = new HashMap<String, Cart>();
     private static String currentUser;
+
+    private String count;
     public static void clearCart()
     {
         carts.get(currentUser).clear();
@@ -57,6 +59,11 @@ public class UserCart {
         order.getItems().add(orderItem);
 
     }
+    public static int getCount( String count) {
+        int num = Integer.parseInt(count);
+        return num;
+    }
+
     public static void setOrderList()
     {
         Cart cart= getCart();

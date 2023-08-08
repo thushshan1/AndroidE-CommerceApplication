@@ -65,6 +65,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         if (viewId == R.id.btnViewOrders) {
             Intent intent = new Intent(this, StoreOrdersActivity.class);
             intent.putExtra("currentUserID", currentUserID);
+            intent.putExtra("storeName", storeName);
             startActivity(intent);
         }
 

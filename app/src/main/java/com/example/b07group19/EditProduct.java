@@ -16,17 +16,18 @@ public class EditProduct extends AppCompatActivity {
 
     RecyclerView recyclerView;
     MainAdapter mainAdapter;
+    String storeName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product);
-
+        storeName = getIntent().getStringExtra("storeName");
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(StoreDashboardActivity.storeName).child("Products"), Products.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(storeName).child("Products"), Products.class)
                         .build();
 
         mainAdapter = new MainAdapter(options);

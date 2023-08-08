@@ -28,18 +28,18 @@ public class Store implements Serializable {
     }
 
     public List<com.example.b07group19.Products> getInventory() {
-        return inventory;
+        return Products;
     }
 
     public void setInventory(List<com.example.b07group19.Products> inventory) {
-        this.inventory = inventory;
+        this.Products = inventory;
     }
 
     public String storeName;
 
-    public List<Products> inventory;
+    public List<Products> Products;
     public Store() {
-        inventory = new ArrayList<Products>();
+        Products = new ArrayList<Products>();
         pendingOrders = new ArrayList<OrderDescription>();
         completedOrders = new ArrayList<OrderDescription>();
     }

@@ -39,7 +39,9 @@ public class ManageProducts extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
 
         } else if (viewId == R.id.button2) {
-            startActivity(new Intent(this, EditProduct.class));
+            Intent intent = new Intent(this, EditProduct.class);
+            intent.putExtra("storeName", storeName);
+            startActivity(intent);
 
         }
     }

@@ -178,21 +178,25 @@ public class Model {
 
     @NonNull
     private static List<Products> getProducts(@NonNull DataSnapshot snapshot, Store store) {
+//        return null;
         Map<String, Object> ob= (HashMap<String, Object>) snapshot.getValue();
         store.setOwner((String) ob.get("owner"));
         store.setStoreName((String) ob.get("storeName"));
-        Map<String, String> products=(HashMap<String, String>)ob.get("Products");
-        Set entrySet=products.entrySet();
-        Iterator it=entrySet.iterator();
-        List<Products> list=new ArrayList<>();
-        while(it.hasNext()){
-            Map.Entry entry=(Map.Entry)(it.next());
-            Gson gson = new Gson();
-            String pstring= (String)gson.toJson( entry.getValue());
-            Products value = gson.fromJson(pstring, Products.class);
-            list.add(value);
-        }
-        return list;
+        return null;
+//        Map<String, String> products=(HashMap<String, String>)ob.get("Products");
+//        if (products==null)
+//            return null;
+//        Set entrySet=products.entrySet();
+//        Iterator it=entrySet.iterator();
+//        List<Products> list=new ArrayList<>();
+//        while(it.hasNext()){
+//            Map.Entry entry=(Map.Entry)(it.next());
+//            Gson gson = new Gson();
+//            String pstring= (String)gson.toJson( entry.getValue());
+//            Products value = gson.fromJson(pstring, Products.class);
+//            list.add(value);
+//        }
+//        return list;
     }
 
     public void postStore(Store store, Consumer<Boolean> callback) {
