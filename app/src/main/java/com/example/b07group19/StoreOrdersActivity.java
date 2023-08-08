@@ -54,7 +54,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String orderID = pendingOrders.get(i).getOrderID();
-                Intent intent = new Intent(StoreOrdersActivity.this, OwnerOrderDetailActivity.class);
+                Intent intent = new Intent(StoreOrdersActivity.this, OrderDetailActivity.class);
                 intent.putExtra("orderID", orderID);
                 startActivity(intent);
             }
