@@ -30,27 +30,17 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_dashboard);
 
-        buttonManageProducts = (Button) findViewById(R.id.buttonManageProducts);
-        buttonManageProducts.setOnClickListener(this);
+
         // currentUserID = getIntent().getStringExtra("currentUserID");
         currentUserID = FirebaseAuth.getInstance().getUid();
-        buttonViewOrder = (Button) findViewById(R.id.buttonViewOrders);
+
 
         model = Model.getInstance();
-        storeText = (TextView) findViewById(R.id.textViewWelcome);
+
         getStore();
 
-        buttonViewOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(StoreDashboardActivity.this,StoreOrdersActivity.class);
-                intent.putExtra("storeName", storeName);
-                startActivity(intent);
 
-            }
 
-        }
-        );
     }
 
     //@Override
@@ -82,8 +72,8 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
                 return;
             }
             this.store = store;
-            storeText.setText(store.storeName);
             storeName = store.storeName;
+            startActivity(new Intent(this, EditProduct.class));
 
         });
     }
