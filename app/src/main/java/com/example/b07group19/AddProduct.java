@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddProduct extends AppCompatActivity implements View.OnClickListener {
 
     private EditText ProductName, Price, Brand, Quantity, Length, Width, Height, url;
@@ -88,8 +91,12 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         FirebaseDatabase.getInstance().getReference("stores").child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Map<String, Object> ob= (HashMap<String, Object>) snapshot.getValue();
+//                store = new Store();
+//                store.setOwner((String) ob.get("owner"));
+//                store.setStoreName((String) ob.get("storeName"));
                 Store store = snapshot.getValue(Store.class);
-                store.Products.add(product);
+                store.products.add(product);
 
                 // save the updated store back to firebase
                 FirebaseDatabase.getInstance().getReference("stores").child(storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {

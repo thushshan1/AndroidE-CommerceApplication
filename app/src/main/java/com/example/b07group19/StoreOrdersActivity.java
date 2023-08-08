@@ -85,29 +85,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
                     }
                 });
     }
-    private void getStore() {
 
-        Toast.makeText(this, currentUserID, Toast.LENGTH_LONG).show();
-        model.getStoreByOwner(currentUserID, (Store store) -> {
-            this.store = store;
-
-            // update list View
-            OrderDescriptionAdapter adapter = new OrderDescriptionAdapter(
-                    StoreOrdersActivity.this, R.layout.activity_store_orders, store.pendingOrders);
-            lv.setAdapter(adapter);
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String orderID = store.pendingOrders.get(i).getOrderID();
-                    Intent intent = new Intent(StoreOrdersActivity.this, OrderDetailActivity.class);
-                    intent.putExtra("orderID", orderID);
-                    startActivity(intent);
-                }
-            });
-
-        });
-    }
 
 }
 //        FirebaseListOptions<OrderDescription> options = new FirebaseListOptions.Builder<OrderDescription>()

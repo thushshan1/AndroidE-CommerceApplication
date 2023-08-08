@@ -21,7 +21,7 @@ public class CustomerStoreViewWithCart extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(CustomerDashboardActivity.storeName).child("Products"), Products.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(CustomerDashboardActivity.storeName).child("products"), Products.class)
                         .build();
 
         adaptor = new CustomerStoreVIewAdaptor(options);

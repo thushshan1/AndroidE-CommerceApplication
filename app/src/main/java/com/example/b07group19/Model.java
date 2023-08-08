@@ -1,17 +1,12 @@
 package com.example.b07group19;
 
-import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.b07group19.models.Cart;
 import com.example.b07group19.models.Order;
 import com.example.b07group19.models.Store;
 import com.example.b07group19.models.UserModel;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.ObservableSnapshotArray;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
+
 import java.util.function.Consumer;
 
 
@@ -31,10 +26,8 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 public class Model {
@@ -161,7 +154,7 @@ public class Model {
                 if(snapshot.exists()){
                     Store store=new Store();
                     List<Products> list = getProducts(snapshot, store);
-                    store.setInventory(list);
+                    store.setProducts(list);
 //                    Store store = snapshot.getValue(Store.class);
                     callback.accept(store);
                 }
@@ -183,7 +176,7 @@ public class Model {
         store.setOwner((String) ob.get("owner"));
         store.setStoreName((String) ob.get("storeName"));
         return null;
-//        Map<String, String> products=(HashMap<String, String>)ob.get("Products");
+//        Map<String, String> products=(HashMap<String, String>)ob.get("products");
 //        if (products==null)
 //            return null;
 //        Set entrySet=products.entrySet();
@@ -216,7 +209,7 @@ public class Model {
                 for (DataSnapshot storeSnapShot: snapshot.getChildren()) {
                     Store store=new Store();
                     List<Products> list = getProducts(storeSnapShot, store);
-                    store.setInventory(list);
+                    store.setProducts(list);
 //                    Store store = storeSnapShot.getValue(Store.class);
                     callback.accept(store);
                     return;

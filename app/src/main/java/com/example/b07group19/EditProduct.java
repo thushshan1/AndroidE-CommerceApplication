@@ -27,7 +27,7 @@ public class EditProduct extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(storeName).child("Products"), Products.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(storeName).child("products"), Products.class)
                         .build();
 
         mainAdapter = new MainAdapter(options);
@@ -73,7 +73,7 @@ public class EditProduct extends AppCompatActivity {
     private void text(String str){
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(StoreDashboardActivity.storeName).child("Products").orderByChild("product").startAt(str).endAt(str+"~"), Products.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(StoreDashboardActivity.storeName).child("products").orderByChild("product").startAt(str).endAt(str+"~"), Products.class)
                         .build();
 
         mainAdapter = new MainAdapter(options);

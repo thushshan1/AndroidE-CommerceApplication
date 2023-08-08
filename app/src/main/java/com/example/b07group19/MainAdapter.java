@@ -102,7 +102,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
 
                         FirebaseDatabase.getInstance().getReference().child("stores")
                                 .child(StoreDashboardActivity.storeName)
-                                .child("Products")
+                                .child("products")
                                 .child(getRef(position).getKey()).updateChildren(map)
                                 .addOnSuccessListener(new OnSuccessListener<Void>(){
                                     @Override
@@ -137,7 +137,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
 
                         FirebaseDatabase.getInstance().getReference().child("stores")
                                 .child(StoreDashboardActivity.storeName)
-                                .child("Products")
+                                .child("products")
                                 .child(getRef(position).getKey()).removeValue();
 
                     }

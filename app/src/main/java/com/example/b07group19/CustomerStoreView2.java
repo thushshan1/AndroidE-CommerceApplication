@@ -49,7 +49,7 @@ public class CustomerStoreView2 extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(CustomerDashboardActivity.storeName).child("Products"), Products.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(CustomerDashboardActivity.storeName).child("products"), Products.class)
                         .build();
 
         mainAdapter2 = new MainAdapter2(options,storeName);
@@ -115,7 +115,7 @@ public class CustomerStoreView2 extends AppCompatActivity {
     private void text(String str){
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(CustomerDashboardActivity.storeName).child("Products").orderByChild("product").startAt(str).endAt(str+"~"), Products.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(CustomerDashboardActivity.storeName).child("products").orderByChild("product").startAt(str).endAt(str+"~"), Products.class)
                         .build();
 
         mainAdapter2 = new MainAdapter2(options,storeName);
