@@ -1,5 +1,6 @@
 package com.example.b07group19;
 
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -287,6 +288,10 @@ public class Model {
         });
     }
 
+    public void completeOrder(String orderID) {
+
+
+    }
 
 
 

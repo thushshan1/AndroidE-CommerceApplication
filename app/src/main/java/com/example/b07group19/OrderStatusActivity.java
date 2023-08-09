@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.b07group19.models.Order;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,12 +25,12 @@ public class OrderStatusActivity extends AppCompatActivity {
     private ListView Pending, Completed;
     private List<Order> pendingOrders, completedOrders;
 
-    public static String theID2;
     @Override
     protected void onCreate(Bundle InstanceState){
         super.onCreate(InstanceState);
         setContentView(R.layout.activity_order_status);
-        currentUserID = getIntent().getStringExtra("currentUserID");
+        currentUserID = FirebaseAuth.getInstance().getUid();
+//        currentUserID = getIntent().getStringExtra("currentUserID");
 
         Pending = (ListView) findViewById(R.id.lvPending);
         Completed = (ListView) findViewById(R.id.lvCompleted);
@@ -38,7 +39,15 @@ public class OrderStatusActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String orderID = pendingOrders.get(i).getOrderID();
-                theID2 = String.valueOf(pendingOrders.get(i).getOrderID());
+                Intent intent = new Intent(OrderStatusActivity.this, OrderDetailActivity.class);
+                intent.putExtra("orderID", orderID);
+                startActivity(intent);
+            }
+        });
+        Completed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String orderID = completedOrders.get(i).getOrderID();
                 Intent intent = new Intent(OrderStatusActivity.this, OrderDetailActivity.class);
                 intent.putExtra("orderID", orderID);
                 startActivity(intent);
@@ -59,6 +68,8 @@ public class OrderStatusActivity extends AppCompatActivity {
 
                         for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
                             Order order = (Order) orderSnapshot.getValue(Order.class);
+                            String key=orderSnapshot.getKey();
+                            order.setOrderID(key);
                             if (order.status.equals("pending")) pendingOrders.add(order);
                             else completedOrders.add(order);
                         }

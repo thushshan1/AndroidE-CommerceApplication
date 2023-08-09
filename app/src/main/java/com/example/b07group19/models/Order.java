@@ -18,7 +18,7 @@ public class Order implements Serializable {
 
 
 
-    public static String orderID;
+    public  String orderID;
     public String userID;
     public String status;
 
@@ -60,7 +60,7 @@ public class Order implements Serializable {
         this.createDate = createDate;
     }
 
-    public static String getOrderID() {
+    public  String getOrderID() {
         return orderID;
     }
 

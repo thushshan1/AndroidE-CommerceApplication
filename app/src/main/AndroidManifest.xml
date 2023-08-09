@@ -33,6 +33,9 @@
             android:name=".OrderStatusActivity"
             android:exported="false" />
         <activity
+            android:name=".OrderDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".CustomerStoreViewWithCart"
             android:exported="false" />
         <activity
