@@ -23,6 +23,7 @@
     <string name="cart">Add to Cart</string>
     <string name="checkout">Check out</string>
     <string name="title_activity_shopper_view">ShopperViewActivity</string>
+    <string name="b">Back</string>
 
 
 </resources>

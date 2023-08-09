@@ -1,27 +1,23 @@
 package com.example.b07group19;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.b07group19.models.Cart;
 import com.example.b07group19.models.UserCart;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShoppingCart extends AppCompatActivity {
     RecyclerView recyclerView;
     ShoppingCartAdaptor adaptor;
+
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +42,14 @@ public class ShoppingCart extends AppCompatActivity {
                     Toast.makeText(ShoppingCart.this, "Cart is empty!Fail to check out", Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        back=(Button)findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ShoppingCart.this, CustomerStoreView2.class));
             }
         });
         Cart cart=UserCart.getCart();
