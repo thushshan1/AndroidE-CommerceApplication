@@ -7,13 +7,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.b07group19.models.Order;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
 public class ShoppingCartAdaptor extends  RecyclerView.Adapter<ShoppingCartAdaptor.myViewholder> {
     List<Order> orderdata;
     public ShoppingCartAdaptor(@NonNull List<Order> orderData ) {
@@ -60,6 +59,10 @@ public class ShoppingCartAdaptor extends  RecyclerView.Adapter<ShoppingCartAdapt
 
             storeName = (TextView)itemView.findViewById(R.id.tv_store_name);
             rv = (RecyclerView)itemView.findViewById(R.id.rv_goods);
+            if(rv == null)
+            {
+                storeName.setText("");
+            }
 
 
 

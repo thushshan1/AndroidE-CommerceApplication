@@ -85,14 +85,7 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                         .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
                         .into(img3);
 
-//                photo_add.setOnClickListener(new View.OnClickListener(){
-//                    public void onClick(View view) {
-////                int x=Integer.parseInt(count.getText().toString());
-////                x++;
-////                count.setText(x+"");
-////            }
-//
-//                });
+
                 photo_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
