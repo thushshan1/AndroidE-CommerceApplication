@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Model model;
     private Presenter presenter;
     private CheckBox ckOwner;
+    public static int check;
 
 
     @Override
@@ -178,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this,StoreDashboardActivity.class);
         final String userID = mAuth.getCurrentUser().getUid();
         intent.putExtra("currentUserID", userID);
+        check = 1;
 
         startActivity(intent);
     }
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final String userID = mAuth.getCurrentUser().getUid();
 
         intent.putExtra("currentUserID", userID);
+        check = 0;
 
         startActivity(intent);
     }

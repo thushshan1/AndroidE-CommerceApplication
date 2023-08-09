@@ -34,6 +34,8 @@ public class StoreOrdersActivity extends AppCompatActivity {
     private List<Order> pendingOrders;
     Map<String,String> userNames;
 
+    public static String theID;
+
    // private List<Order> pendingOrders;
 
 
@@ -54,6 +56,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String orderID = pendingOrders.get(i).getOrderID();
+                theID = String.valueOf(orderID);
                 Intent intent = new Intent(StoreOrdersActivity.this, OrderDetailActivity.class);
                 intent.putExtra("orderID", orderID);
                 startActivity(intent);

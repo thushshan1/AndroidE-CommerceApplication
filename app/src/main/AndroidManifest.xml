@@ -21,7 +21,7 @@
             android:name=".OrderDescriptionAdapter"
             android:exported="false" />
         <activity
-            android:name=".OwnerOrderDetailActivity"
+            android:name=".OrderDetailActivity"
             android:exported="false" />
         <activity
             android:name=".StoreOrdersActivity"

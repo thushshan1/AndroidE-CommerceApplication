@@ -3,7 +3,10 @@ package com.example.b07group19;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.b07group19.models.Order;
@@ -20,6 +23,8 @@ public class OrderStatusActivity extends AppCompatActivity {
     private String currentUserID;
     private ListView Pending, Completed;
     private List<Order> pendingOrders, completedOrders;
+
+    public static String theID2;
     @Override
     protected void onCreate(Bundle InstanceState){
         super.onCreate(InstanceState);
@@ -28,6 +33,17 @@ public class OrderStatusActivity extends AppCompatActivity {
 
         Pending = (ListView) findViewById(R.id.lvPending);
         Completed = (ListView) findViewById(R.id.lvCompleted);
+
+        Pending.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String orderID = pendingOrders.get(i).getOrderID();
+                theID2 = String.valueOf(pendingOrders.get(i).getOrderID());
+                Intent intent = new Intent(OrderStatusActivity.this, OrderDetailActivity.class);
+                intent.putExtra("orderID", orderID);
+                startActivity(intent);
+            }
+        });
 
         getOrders();
     }
