@@ -1,6 +1,7 @@
 package com.example.b07group19;
 
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -293,6 +294,27 @@ public class Model {
 
     }
 
+    public void deleterProductItem(String storeName,int positon) {
+        storesRef.child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Store store=snapshot.getValue(Store.class);
+                store.products.remove(positon);
+                storesRef.child(storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });;
+
+                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+
+    }
 
 
 }

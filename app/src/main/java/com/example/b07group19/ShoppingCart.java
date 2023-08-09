@@ -45,13 +45,13 @@ public class ShoppingCart extends AppCompatActivity {
             }
         });
 
-        back=(Button)findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingCart.this, CustomerStoreView2.class));
-            }
-        });
+//        back=(Button)findViewById(R.id.back);
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(ShoppingCart.this, CustomerStoreView2.class));
+//            }
+//        });
         Cart cart=UserCart.getCart();
         UserCart.setOrderList();
 //        List<Cart.OrderDataStore> orderdata = new ArrayList<Cart.OrderDataStore>();

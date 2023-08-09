@@ -36,8 +36,10 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
      *
      * @param options
      */
-    public MainAdapter(@NonNull FirebaseRecyclerOptions<Products> options) {
+    String storeName;
+    public MainAdapter(@NonNull FirebaseRecyclerOptions<Products> options, String storeName) {
         super(options);
+        this.storeName = storeName;
     }
 
     @Override
@@ -134,11 +136,12 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Model.getInstance().deleterProductItem(storeName,position);
 
-                        FirebaseDatabase.getInstance().getReference().child("stores")
-                                .child(StoreDashboardActivity.storeName)
-                                .child("products")
-                                .child(getRef(position).getKey()).removeValue();
+//                        FirebaseDatabase.getInstance().getReference().child("stores")
+//                                .child(StoreDashboardActivity.storeName)
+//                                .child("products")
+//                                .child(getRef(position).getKey()).removeValue();
 
                     }
                 });

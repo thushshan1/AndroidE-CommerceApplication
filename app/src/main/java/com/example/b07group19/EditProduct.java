@@ -102,7 +102,7 @@ public class EditProduct extends AppCompatActivity {
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(storeName).child("products"), Products.class)
                         .build();
 
-        mainAdapter = new MainAdapter(options);
+        mainAdapter = new MainAdapter(options,storeName);
         recyclerView.setAdapter(mainAdapter);
 
 
@@ -173,7 +173,7 @@ public class EditProduct extends AppCompatActivity {
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("stores").child(storeName).child("products").orderByChild("product").startAt(str).endAt(str+"~"), Products.class)
                         .build();
 
-        mainAdapter = new MainAdapter(options);
+        mainAdapter = new MainAdapter(options,storeName);
         mainAdapter.startListening();
         recyclerView.setAdapter(mainAdapter);
     }
