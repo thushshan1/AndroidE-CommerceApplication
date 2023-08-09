@@ -8,16 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_weight="33.3"
-        android:text="username"
+        android:text=""
         android:gravity="center"
-        android:id="@+id/tvUserName"/>
+        android:id="@+id/tvStoreName"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_weight="33.3"
-        android:text="createdate"
+        android:text=""
         android:gravity="center"
         android:id="@+id/tvCreatedDate"/>
 
@@ -26,11 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_weight="33.3"
-        android:text="count"
+        android:text=""
         android:gravity="center"
-        android:id="@+id/tvOwnerNumberOfItems"/>
+        android:id="@+id/tvNumberOfItems"/>
 
 
 
 </LinearLayout>
-

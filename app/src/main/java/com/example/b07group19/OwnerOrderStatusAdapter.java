@@ -14,38 +14,30 @@ import com.example.b07group19.models.Order;
 import java.util.List;
 import java.util.Map;
 
-public class OwnerOrderAdapter extends ArrayAdapter<Order> {
+public class OwnerOrderStatusAdapter extends ArrayAdapter<Order> {
 
     private Context context;
     private int resource;
     Map<String,String> userNames;
 
-    public OwnerOrderAdapter(Context context, int resource, List<Order> objects,Map<String,String>userNames){
+    public OwnerOrderStatusAdapter(Context context, int resource, List<Order> objects,Map<String,String> userNames){
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
-        this.userNames=userNames;
+        this.userNames = userNames;
 
-
-        //Model.getInstance().getUserNames();
     }
     private class ViewHolder {
         TextView tvUserName;
         TextView tvCreateDate;
         TextView tvNumberOfItems;
-        Map<String,String> userNames;
-
-        public ViewHolder() {
-
-
-        }
     }
     @NonNull
     @Override
     public View getView(int position, View converView, ViewGroup parent){
         Order order = getItem(position);
 
-        String userName = userNames.get(order.userID);
+        String userID = order.userID;
         String createdData = order.createDate;
         String numberOfItems = ((Integer) order.items.size()).toString();
 
@@ -54,9 +46,9 @@ public class OwnerOrderAdapter extends ArrayAdapter<Order> {
             LayoutInflater inflater = LayoutInflater.from(context);
             converView = inflater.inflate(resource, parent, false);
             holder = new ViewHolder();
-            holder.tvUserName = (TextView) converView.findViewById(R.id.tvUserName);
+            holder.tvUserName = (TextView) converView.findViewById(R.id.tvStoreName);
             holder.tvCreateDate = (TextView) converView.findViewById(R.id.tvCreatedDate);
-            holder.tvNumberOfItems = (TextView) converView.findViewById(R.id.tvOwnerNumberOfItems);
+            holder.tvNumberOfItems = (TextView) converView.findViewById(R.id.tvNumberOfItems);
 
             converView.setTag(holder);
 
@@ -64,7 +56,7 @@ public class OwnerOrderAdapter extends ArrayAdapter<Order> {
             holder = (ViewHolder) converView.getTag();
         }
 
-        holder.tvUserName.setText(userName);
+        holder.tvUserName.setText(userNames.get(userID));
         holder.tvCreateDate.setText(createdData);
         holder.tvNumberOfItems.setText(numberOfItems);
 

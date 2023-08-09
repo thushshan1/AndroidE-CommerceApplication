@@ -84,7 +84,7 @@ public class EditProduct extends AppCompatActivity {
         buttonViewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(EditProduct.this,StoreOrdersActivity.class);
+                Intent intent = new Intent(EditProduct.this,OwnerOrderStatusActivity.class);
                 intent.putExtra("storeName", storeName);
                 startActivity(intent);
 
