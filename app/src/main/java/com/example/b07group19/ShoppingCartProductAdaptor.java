@@ -16,8 +16,13 @@ import com.example.b07group19.models.OrderItem;
 
 public class ShoppingCartProductAdaptor extends  RecyclerView.Adapter<ShoppingCartProductAdaptor.myViewholder> {
     Order orders;
-    public ShoppingCartProductAdaptor(@NonNull Order orderData ) {
+    ShoppingCartAdaptor shoppingCartAdaptor;
+    int pos;
+    public ShoppingCartProductAdaptor(@NonNull Order orderData, int position, ShoppingCartAdaptor shoppingCartAdaptor) {
         this.orders=orderData;
+        this.shoppingCartAdaptor=shoppingCartAdaptor;
+        this.pos = position;
+
     }
 
 
@@ -60,6 +65,10 @@ public class ShoppingCartProductAdaptor extends  RecyclerView.Adapter<ShoppingCa
                 }
                 else{
                     orders.getItems().remove(position);
+                    if (orders.getItems().size()==0) {
+                        shoppingCartAdaptor.orderdata.remove(pos);
+                        shoppingCartAdaptor.notifyDataSetChanged();
+                    }
                     notifyDataSetChanged();
                     Toast.makeText(view.getContext(), "Deleted", Toast.LENGTH_LONG).show();}
             }

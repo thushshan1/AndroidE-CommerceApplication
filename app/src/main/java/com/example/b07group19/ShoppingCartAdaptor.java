@@ -34,7 +34,7 @@ public class ShoppingCartAdaptor extends  RecyclerView.Adapter<ShoppingCartAdapt
         Order order=orderdata.get(position);
         holder.storeName.setText(order.getStoreName());
         ShoppingCartProductAdaptor adaptor;
-        adaptor = new ShoppingCartProductAdaptor(order);
+        adaptor = new ShoppingCartProductAdaptor(order, position, this);
         holder.rv.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
         holder.rv.setAdapter(adaptor);
 
