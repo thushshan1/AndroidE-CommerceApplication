@@ -74,9 +74,13 @@ public class StoreOrdersActivity extends AppCompatActivity {
                             Order order = (Order) orderSnapshot.getValue(Order.class);
                             if (order.status.equals("pending")) pendingOrders.add(order);
                         }
-                        OwnerOrderAdapter pendingAdapter =
-                                new OwnerOrderAdapter(StoreOrdersActivity.this, R.layout.activity_owner_order_adapter, pendingOrders);
-                        lv.setAdapter(pendingAdapter);
+                        Model.getInstance().getUserNames(userNames ->{
+
+                            OwnerOrderAdapter pendingAdapter =
+                                    new OwnerOrderAdapter(StoreOrdersActivity.this, R.layout.activity_owner_order_adapter, pendingOrders,userNames);
+                            lv.setAdapter(pendingAdapter);
+                        });
+
 
                     }
 
