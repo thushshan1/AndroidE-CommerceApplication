@@ -21,18 +21,6 @@
             android:name=".StoreOrdersActivity"
             android:exported="false" />
         <activity
-            android:name=".OrderStatusAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".OrderStatusActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OrderDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CustomerStoreViewWithCart"
-            android:exported="false" />
-        <activity
             android:name=".CustomerStoreView2"
             android:exported="false" />
         <activity
@@ -48,6 +36,12 @@
             android:exported="false" />
         <activity
             android:name=".CustomerDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".CreateStoreActivity"

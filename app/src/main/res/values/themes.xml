@@ -1,11 +1,61 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.B07Group19" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/text_on_primary</item>
+        
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent_color</item>
+        <item name="colorOnSecondary">@color/text_on_primary</item>
+        
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/background_light</item>
+        <item name="colorSurface">@color/surface_light</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:windowBackground">@color/background_light</item>
+        
+        <!-- Text colors -->
+        <item name="colorOnBackground">@color/text_primary</item>
+        
+        <!-- Error colors -->
+        <item name="colorError">@color/error_color</item>
+        <item name="colorOnError">@color/text_on_primary</item>
+        
+        <!-- Animation styles -->
+        <item name="android:windowAnimationStyle">@style/AppTheme.WindowAnimation</item>
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_left</item>
     </style>
 
-
     <style name="Theme.B07Group19" parent="Base.Theme.B07Group19" />
+
+    <!-- Window Animation Style -->
+    <style name="AppTheme.WindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_left</item>
+        <item name="android:taskOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:taskOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:taskCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:taskCloseExitAnimation">@anim/slide_out_left</item>
+    </style>
+
+    <!-- Button Animation Style -->
+    <style name="AnimatedButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/button_ripple_animation</item>
+    </style>
+
+    <!-- Card Animation Style -->
+    <style name="AnimatedCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:stateListAnimator">@animator/card_elevation_animator</item>
+    </style>
+
 </resources>
