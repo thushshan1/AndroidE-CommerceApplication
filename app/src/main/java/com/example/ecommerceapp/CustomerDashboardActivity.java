@@ -302,5 +302,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             .setStartDelay(700)
             .start();
     }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Smooth fade transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
 }

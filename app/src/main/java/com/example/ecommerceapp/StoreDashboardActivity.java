@@ -9,11 +9,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ecommerceapp.models.Store;
+import com.example.ecommerceapp.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -28,6 +30,8 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
 
     private String thename;
     private String storeName;
+    private UserModel ownerInfo;
+    private boolean isCreatingStore = false; // Flag to prevent multiple store creation
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         buttonManageProducts = findViewById(R.id.buttonManageProducts);
         buttonViewOrder = findViewById(R.id.buttonViewOrders);
         Button buttonAddProduct = findViewById(R.id.buttonAddProduct);
+        Button buttonProfile = findViewById(R.id.buttonProfile);
         Button buttonLogout = findViewById(R.id.buttonLogout);
         storeText = findViewById(R.id.textViewWelcome);
 
@@ -45,6 +50,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         buttonManageProducts.setOnClickListener(this);
         buttonViewOrder.setOnClickListener(this);
         buttonAddProduct.setOnClickListener(this);
+        buttonProfile.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
         // Get current user
@@ -61,6 +67,13 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         
         // Add entrance animations
         startDashboardAnimations();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh owner info and welcome message when returning from ProfileActivity
+        loadOwnerInformation();
     }
 
     @Override
@@ -84,6 +97,10 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             intent.putExtra("currentUserID", currentUserID);
             intent.putExtra("storeName", storeName);
             startActivity(intent);
+        } else if (viewId == R.id.buttonProfile) {
+            // Open profile activity
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         } else if (viewId == R.id.buttonLogout) {
             // Logout functionality
             FirebaseAuth.getInstance().signOut();
@@ -98,22 +115,86 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
 
     }
     private void getStore() {
+        // Load owner information first
+        loadOwnerInformation();
+        
         model.getStoreByOwner(currentUserID, (Store store) -> {
             if (store == null) {
-                Intent intent = new Intent(this, CreateStoreActivity.class);
-                intent.putExtra("currentUserID", currentUserID);
-                startActivity(intent);
+                // Only create store if we're not already creating one
+                if (!isCreatingStore) {
+                    isCreatingStore = true;
+                    createStoreAutomatically();
+                }
                 return;
             }
+            isCreatingStore = false; // Reset flag when store is found
             this.store = store;
             storeName = store.storeName;
             
-            // Update welcome text with store name
-            if (storeText != null) {
-                storeText.setText("Welcome to " + storeName);
-            }
+            // Update welcome text with owner name
+            updateWelcomeMessage();
         });
     }
+
+    private void loadOwnerInformation() {
+        model.getOwner(currentUserID, (UserModel owner) -> {
+            if (owner != null) {
+                ownerInfo = owner;
+            }
+            // Update welcome message after loading owner info
+            updateWelcomeMessage();
+        });
+    }
+
+    private void updateWelcomeMessage() {
+        if (storeText != null) {
+            String welcomeText = "Welcome";
+            if (ownerInfo != null && ownerInfo.name != null && !ownerInfo.name.isEmpty()) {
+                welcomeText += ", " + ownerInfo.name;
+            } else {
+                welcomeText += ", Store Owner";
+            }
+            storeText.setText(welcomeText);
+        }
+    }
+
+    private void createStoreAutomatically() {
+        // Check again if store exists before creating (prevent race condition)
+        model.getStoreByOwner(currentUserID, (Store existingStore) -> {
+            if (existingStore != null) {
+                // Store was created by another process, use it
+                isCreatingStore = false;
+                this.store = existingStore;
+                this.storeName = existingStore.storeName;
+                updateWelcomeMessage();
+                return;
+            }
+            
+            // Use user ID as the store name/identifier initially
+            // User can change it later through the store information section
+            String storeNameFromUserId = currentUserID;
+            
+            // Create the store using user ID as the store name
+            Store newStore = new Store(storeNameFromUserId);
+            newStore.owner = currentUserID;
+            
+            model.postStore(newStore, (Boolean created) -> {
+                isCreatingStore = false;
+                if (created) {
+                    // Store created successfully
+                    this.store = newStore;
+                    this.storeName = storeNameFromUserId;
+                    
+                    // Update welcome message
+                    updateWelcomeMessage();
+                } else {
+                    Toast.makeText(StoreDashboardActivity.this, "Failed to create store. Please try again.", Toast.LENGTH_LONG).show();
+                    Log.e("StoreDashboardActivity", "Failed to create store automatically");
+                }
+            });
+        });
+    }
+
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -126,6 +207,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         View manageProductsBtn = findViewById(R.id.buttonManageProducts);
         View viewOrdersBtn = findViewById(R.id.buttonViewOrders);
         View addProductBtn = findViewById(R.id.buttonAddProduct);
+        View profileBtn = findViewById(R.id.buttonProfile);
         View logoutBtn = findViewById(R.id.buttonLogout);
         View statsCard = findViewById(R.id.stats_card);
         
@@ -144,6 +226,10 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
         addProductBtn.setAlpha(0f);
         addProductBtn.setScaleX(0.8f);
         addProductBtn.setScaleY(0.8f);
+        
+        profileBtn.setAlpha(0f);
+        profileBtn.setScaleX(0.8f);
+        profileBtn.setScaleY(0.8f);
         
         logoutBtn.setAlpha(0f);
         logoutBtn.setScaleX(0.8f);
@@ -185,7 +271,7 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             .setStartDelay(600)
             .start();
         
-        logoutBtn.animate()
+        profileBtn.animate()
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
@@ -193,12 +279,20 @@ public class StoreDashboardActivity extends AppCompatActivity implements View.On
             .setStartDelay(700)
             .start();
         
+        logoutBtn.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(500)
+            .setStartDelay(800)
+            .start();
+        
         // Animate stats card
         statsCard.animate()
             .alpha(1f)
             .translationY(0f)
             .setDuration(600)
-            .setStartDelay(800)
+            .setStartDelay(900)
             .start();
     }
     

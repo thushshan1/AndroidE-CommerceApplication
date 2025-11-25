@@ -24,15 +24,13 @@
             android:name=".CustomerStoreView2"
             android:exported="false" />
         <activity
-            android:name=".EditProduct"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            />
-        <activity
             android:name=".ShoppingCart"
             android:exported="false" />
         <activity
             android:name=".StoreDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".CustomerDashboardActivity"
@@ -42,9 +40,6 @@
             android:exported="false" />
         <activity
             android:name=".OrderDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreateStoreActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

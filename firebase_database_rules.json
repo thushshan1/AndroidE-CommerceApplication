@@ -1,0 +1,27 @@
+{
+  "rules": {
+    "Users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "Owners": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "stores": {
+      ".read": true,
+      "$storeId": {
+        ".write": "auth != null && (data.child('owner').val() === auth.uid || !data.exists())"
+      }
+    },
+    "orders": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}
+

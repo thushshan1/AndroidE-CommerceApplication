@@ -100,23 +100,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserModel user = new UserModel(email, name, "25"); // Default age
-
-                            // check if owner or user
-                            String userType = isOwner ? "Owners" : "Users";
-
                             String uid = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
                             if (uid != null) {
+                                // Create user model with userID set
+                                UserModel user = new UserModel();
+                                user.email = email;
+                                user.name = name;
+                                user.age = "25"; // Default age
+                                user.userID = uid; // Set the userID
+
+                                // check if owner or user
+                                String userType = isOwner ? "Owners" : "Users";
+
                                 FirebaseDatabase.getInstance().getReference(userType).child(uid)
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(RegisterActivity.this, "You have been registered successfully!", Toast.LENGTH_LONG).show();
+                                                // Sign out so user can log in
+                                                mAuth.signOut();
                                                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                                // redirect to login
-                                            }else {
-                                                Toast.makeText(RegisterActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+                                                finish();
+                                            } else {
+                                                String errorMsg = "Failed to register!";
+                                                if (task.getException() != null) {
+                                                    errorMsg += " " + task.getException().getMessage();
+                                                    Log.e("RegisterActivity", "Database error: " + task.getException().getMessage(), task.getException());
+                                                }
+                                                Toast.makeText(RegisterActivity.this, errorMsg, Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     });
@@ -124,8 +136,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 Log.e("RegisterActivity", "User ID is null after registration");
                                 Toast.makeText(RegisterActivity.this, "Registration failed. Please try again.", Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            Toast.makeText(RegisterActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+                        } else {
+                            String errorMsg = "Failed to register!";
+                            if (task.getException() != null) {
+                                errorMsg += " " + task.getException().getMessage();
+                                Log.e("RegisterActivity", "Auth error: " + task.getException().getMessage(), task.getException());
+                            }
+                            Toast.makeText(RegisterActivity.this, errorMsg, Toast.LENGTH_LONG).show();
                         }
                     }
                 });

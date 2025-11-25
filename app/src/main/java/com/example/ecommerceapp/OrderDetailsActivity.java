@@ -38,7 +38,20 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
         
         initializeViews();
         setupRecyclerView();
+        setupBackButton();
         loadOrderDetails();
+    }
+    
+    private void setupBackButton() {
+        View backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     private void initializeViews() {
@@ -72,26 +85,26 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
                                 if (order != null) {
                                     displayOrderDetails(order);
                                 } else {
-                                    createSampleOrderDetails(); // Fallback to sample data
+                                    showEmptyOrder();
                                 }
                             } else {
-                                createSampleOrderDetails(); // Fallback to sample data
+                                showEmptyOrder();
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.e("OrderDetailsActivity", "Failed to load order: " + error.getMessage());
-                            createSampleOrderDetails(); // Fallback to sample data
+                            showEmptyOrder();
                         }
                     });
         } else {
-            createSampleOrderDetails(); // Fallback to sample data
+            showEmptyOrder();
         }
     }
     
     private void displayOrderDetails(Order order) {
-        orderId.setText("#" + currentOrderId);
+        orderId.setText("#" + (currentOrderId != null ? currentOrderId : "Unknown"));
         orderDate.setText(order.createDate != null ? order.createDate : "Unknown Date");
         storeName.setText(order.storeName != null ? order.storeName : "Unknown Store");
         
@@ -105,28 +118,19 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
         orderTotal.setText("$" + String.format("%.2f", total));
         
         // Display order items
-        if (order.items != null) {
+        if (order.items != null && !order.items.isEmpty()) {
             orderItemAdapter.updateItems(order.items);
         } else {
             orderItemAdapter.updateItems(new ArrayList<>());
         }
     }
-
-    private void createSampleOrderDetails() {
-        // Sample order details
-        orderId.setText("#" + currentOrderId);
-        orderDate.setText("Dec 15, 2024");
-        storeName.setText("Tech Store");
-        orderTotal.setText("$1,299.99");
-
-        // Sample order items
-        List<OrderItem> items = new ArrayList<>();
-        items.add(new OrderItem("1", "iPhone 15 Pro", "Apple", 999.99, 1));
-        items.add(new OrderItem("2", "AirPods Pro", "Apple", 249.99, 1));
-        items.add(new OrderItem("3", "Lightning Cable", "Apple", 29.99, 1));
-        items.add(new OrderItem("4", "Screen Protector", "Apple", 19.99, 1));
-
-        orderItemAdapter.updateItems(items);
+    
+    private void showEmptyOrder() {
+        orderId.setText("#" + (currentOrderId != null ? currentOrderId : "Unknown"));
+        orderDate.setText("No date available");
+        storeName.setText("No store information");
+        orderTotal.setText("$0.00");
+        orderItemAdapter.updateItems(new ArrayList<>());
     }
 
     @Override
@@ -150,5 +154,12 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(this, "Order ID not available for support", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Smooth fade transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

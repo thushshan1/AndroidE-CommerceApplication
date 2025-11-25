@@ -136,7 +136,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<Products,MainAdapter.my
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Model.getInstance().deleterProductItem(storeName,position);
+                        Model.getInstance().deleterProductItem(position);
 
 //                        FirebaseDatabase.getInstance().getReference().child("stores")
 //                                .child(storeName)

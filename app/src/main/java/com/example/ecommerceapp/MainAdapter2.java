@@ -38,12 +38,15 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
     protected void onBindViewHolder(@NonNull myViewholder holder, int position, @NonNull Products model) {
         holder.pro.setText(model.getProduct());
 
-        Glide.with(holder.img2.getContext())
-                .load(model.getTurl())
-                .placeholder(com.google.firebase.database.R.drawable.common_google_signin_btn_icon_dark)
-                .circleCrop()
-                .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
-                .into(holder.img2);
+        // Load product image
+        if (model.getTurl() != null && !model.getTurl().isEmpty()) {
+            Glide.with(holder.img2.getContext())
+                    .load(model.getTurl())
+                    .placeholder(com.google.firebase.database.R.drawable.common_google_signin_btn_icon_dark)
+                    .centerCrop()
+                    .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                    .into(holder.img2);
+        }
 
 
         holder.view.setOnClickListener(new View.OnClickListener() {
@@ -51,14 +54,16 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
             public void onClick(View view) {
                 final DialogPlus dialogPlus = DialogPlus.newDialog(holder.img2.getContext())
                         .setContentHolder(new ViewHolder(R.layout.viewitem))
-                        .setExpanded(true, 2400)
+                        .setExpanded(false)
+                        .setContentHeight(android.view.ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setContentWidth(android.view.ViewGroup.LayoutParams.MATCH_PARENT)
                         .create();
 
                 dialogPlus.show();
 
                 View view1 = dialogPlus.getHolderView();
-                ImageView photo_add= view1.findViewById(R.id.photo_add);
-                ImageView photo_down= view1.findViewById(R.id.ptoto_down);
+                com.google.android.material.button.MaterialButton photo_add = view1.findViewById(R.id.photo_add);
+                com.google.android.material.button.MaterialButton photo_down = view1.findViewById(R.id.ptoto_down);
                 TextView pro2 = view1.findViewById(R.id.nametext1);
                 TextView bran1 = view1.findViewById(R.id.Brand1);
                 TextView pri1 = view1.findViewById(R.id.Price1);
@@ -66,44 +71,55 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                 TextView len1 = view1.findViewById(R.id.Length1);
                 TextView wid1 = view1.findViewById(R.id.Width1);
                 TextView quan = view1.findViewById(R.id.Quantity1);
-                TextView count =view1.findViewById(R.id.Count);
-                CircleImageView img3 = view1.findViewById(R.id.img3);
-                Button add = view1.findViewById(R.id.AddtoCart);
+                TextView count = view1.findViewById(R.id.Count);
+                ImageView img3 = view1.findViewById(R.id.img3);
+                com.google.android.material.button.MaterialButton add = view1.findViewById(R.id.AddtoCart);
 
                 pro2.setText(model.getProduct());
-                bran1.setText("Brand: " + model.getBrand());
-                pri1.setText("Price: $" + model.getPrice());
-                hei1.setText("Height: " + model.getHeight());
-                len1.setText("Length: " + model.getLength());
-                wid1.setText("Width: " + model.getWidth());
-                quan.setText("Quantity: " + model.getQuantity());
+                bran1.setText("Brand: " + (model.getBrand() != null && !model.getBrand().isEmpty() ? model.getBrand() : "N/A"));
+                pri1.setText("$" + (model.getPrice() != null ? model.getPrice() : "0.00"));
+                hei1.setText("Height: " + (model.getHeight() != null && !model.getHeight().isEmpty() ? model.getHeight() : "N/A"));
+                len1.setText("Length: " + (model.getLength() != null && !model.getLength().isEmpty() ? model.getLength() : "N/A"));
+                wid1.setText("Width: " + (model.getWidth() != null && !model.getWidth().isEmpty() ? model.getWidth() : "N/A"));
+                quan.setText("Available Quantity: " + (model.getQuantity() != null ? model.getQuantity() : "0"));
 
-                Glide.with(img3.getContext())
-                        .load(model.getTurl())
-                        .placeholder(com.google.firebase.database.R.drawable.common_google_signin_btn_icon_dark)
-                        .circleCrop()
-                        .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
-                        .into(img3);
+                // Load product image
+                if (model.getTurl() != null && !model.getTurl().isEmpty()) {
+                    Glide.with(img3.getContext())
+                            .load(model.getTurl())
+                            .placeholder(com.google.firebase.database.R.drawable.common_google_signin_btn_icon_dark)
+                            .centerCrop()
+                            .error(com.firebase.ui.database.R.drawable.common_google_signin_btn_icon_dark_normal)
+                            .into(img3);
+                }
 
 
                 photo_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int x = Integer.parseInt(count.getText().toString());
-                        x++;
-                        count.setText(x + "");
+                        try {
+                            int x = Integer.parseInt(count.getText().toString());
+                            x++;
+                            count.setText(String.valueOf(x));
+                        } catch (NumberFormatException e) {
+                            count.setText("1");
+                        }
                     }
                 });
                 photo_down.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int x=Integer.parseInt(count.getText().toString());
-                                if(x>1) {
-                                    x--;
-                                }
-                                else{
-                                    Toast.makeText(view.getContext(), "You already reached minimum amount", Toast.LENGTH_LONG).show();}
-                        count.setText(x+"");
+                        try {
+                            int x = Integer.parseInt(count.getText().toString());
+                            if (x > 1) {
+                                x--;
+                                count.setText(String.valueOf(x));
+                            } else {
+                                Toast.makeText(view.getContext(), "You already reached minimum amount", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (NumberFormatException e) {
+                            count.setText("1");
+                        }
                     }
                 });
                 add.setOnClickListener(new View.OnClickListener() {
@@ -117,9 +133,8 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
                         detail.setBrand(model.getBrand());
                         detail.setCount(count.getText().toString());
                         UserCart.addItem(storeName,detail);
-                        Toast.makeText(view.getContext(), "Added!", Toast.LENGTH_SHORT).show();
-
-
+                        Toast.makeText(view.getContext(), "Added to cart!", Toast.LENGTH_SHORT).show();
+                        dialogPlus.dismiss(); // Close the dialog after adding to cart
                     }
                 });
 
@@ -144,31 +159,16 @@ public class MainAdapter2 extends FirebaseRecyclerAdapter<Products,MainAdapter2.
 
     class myViewholder extends RecyclerView.ViewHolder{
 
-        CircleImageView img2,img3;
-        TextView pro, pro1, bran, price, hei, len, wid, qual,count;
-        ImageView add, down;
-
+        ImageView img2;
+        TextView pro;
         Button view;
-
 
         public myViewholder(@NonNull View itemView) {
             super(itemView);
 
-            img2 = (CircleImageView)itemView.findViewById(R.id.img2);
-            img3 = (CircleImageView)itemView.findViewById(R.id.img3);
-            pro = (TextView)itemView.findViewById(R.id.pro);
-            pro1 = (TextView)itemView.findViewById(R.id.nametext1);
-            view = (Button)itemView.findViewById(R.id.view);
-            bran = (TextView)itemView.findViewById(R.id.Brand1);
-            price = (TextView)itemView.findViewById(R.id.Price1);
-            hei = (TextView)itemView.findViewById(R.id.Height1);
-            len = (TextView)itemView.findViewById(R.id.Length1);
-            wid = (TextView)itemView.findViewById(R.id.Width1);
-            qual = (TextView)itemView.findViewById(R.id.Quantity1);
-            count = (TextView)itemView.findViewById(R.id.Count);
-            add=(ImageView) view.findViewById(R.id.photo_add);
-            down=(ImageView) view.findViewById(R.id.ptoto_down);
-
+            img2 = itemView.findViewById(R.id.img2);
+            pro = itemView.findViewById(R.id.pro);
+            view = itemView.findViewById(R.id.view);
         }
     }
 

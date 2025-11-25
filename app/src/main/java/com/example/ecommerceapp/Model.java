@@ -131,6 +131,22 @@ public class Model {
         });
     }
 
+    public void getOwner(String ownerID, Consumer<UserModel> callback){
+        ownerRef.child(ownerID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel owner = snapshot.getValue(UserModel.class);
+                callback.accept(owner); // Can be null if owner doesn't exist
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Model.getOwner", "Database error: " + error.getMessage());
+                callback.accept(null);
+            }
+        });
+    }
+
 
     public void register(String email, String password, Consumer<String>callback) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -169,19 +185,19 @@ public class Model {
 
     }
     public void getStoreByName(String storeName, Consumer<Store> callback) {
-        storesRef.child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Search for store by storeName field (stores are now keyed by owner ID)
+        storesRef.orderByChild("storeName").equalTo(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    Store store=new Store();
-                    List<Products> list = getProducts(snapshot, store);
+                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+                    Store store = new Store();
+                    List<Products> list = getProducts(storeSnapshot, store);
                     store.setProducts(list);
-//                    Store store = snapshot.getValue(Store.class);
                     callback.accept(store);
+                    return;
                 }
-                else{
-                    callback.accept(null);
-                }
+                // Store not found
+                callback.accept(null);
             }
 
             @Override
@@ -190,7 +206,10 @@ public class Model {
                 callback.accept(null);
             }
         });
+    }
 
+    public List<Products> getProductsFromSnapshot(@NonNull DataSnapshot snapshot, Store store) {
+        return getProducts(snapshot, store);
     }
 
     @NonNull
@@ -217,7 +236,59 @@ public class Model {
     }
 
     public void postStore(Store store, Consumer<Boolean> callback) {
-        storesRef.child(store.storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+        // Ensure owner is set (use current user ID if not set)
+        if (store.owner == null || store.owner.isEmpty()) {
+            String uid = auth.getUid();
+            if (uid != null) {
+                store.owner = uid;
+            } else {
+                Log.e("Model.postStore", "Cannot create store: owner is null and user is not authenticated");
+                callback.accept(false);
+                return;
+            }
+        }
+        
+        // Use owner ID as the Firebase key (one store per owner)
+        // This allows us to update the store name without creating new entries
+        String storeKey = store.owner;
+        Log.d("Model.postStore", "Saving store with key (owner): " + storeKey + ", storeName: " + store.storeName);
+        storesRef.child(storeKey).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Model.postStore", "Store saved successfully");
+                } else {
+                    Log.e("Model.postStore", "Failed to save store: " + (task.getException() != null ? task.getException().getMessage() : "Unknown error"));
+                }
+                callback.accept(task.isSuccessful());
+            }
+        });
+    }
+
+    private String sanitizeFirebaseKey(String key) {
+        if (key == null) return "";
+        // Firebase keys cannot contain: . $ # [ ] /
+        // Replace these with underscores
+        return key.replace(".", "_")
+                  .replace("$", "_")
+                  .replace("#", "_")
+                  .replace("[", "_")
+                  .replace("]", "_")
+                  .replace("/", "_");
+    }
+
+    public void deleteStore(String ownerID, Consumer<Boolean> callback) {
+        // Delete store by owner ID (which is now the key)
+        storesRef.child(ownerID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.accept(task.isSuccessful());
+            }
+        });
+    }
+
+    public void postOwner(UserModel owner, Consumer<Boolean> callback) {
+        ownerRef.child(owner.userID).setValue(owner).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 callback.accept(task.isSuccessful());
@@ -226,20 +297,19 @@ public class Model {
     }
 
     public void getStoreByOwner(String owner, Consumer<Store> callback) {
-
-        storesRef.orderByChild("owner").equalTo(owner).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Since stores are now keyed by owner ID, we can directly access it
+        storesRef.child(owner).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot storeSnapShot: snapshot.getChildren()) {
-                    Store store=new Store();
-                    List<Products> list = getProducts(storeSnapShot, store);
+                if (snapshot.exists()) {
+                    Store store = new Store();
+                    List<Products> list = getProducts(snapshot, store);
                     store.setProducts(list);
-//                    Store store = storeSnapShot.getValue(Store.class);
                     callback.accept(store);
-                    return;
+                } else {
+                    // Store doesn't exist
+                    callback.accept(null);
                 }
-                // not exist
-                callback.accept(null);
             }
 
             @Override
@@ -338,28 +408,36 @@ public class Model {
         }
     }
 
-    public void deleterProductItem(String storeName,int positon) {
-        storesRef.child(storeName).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void deleterProductItem(int positon) {
+        // Use current user ID as the key (stores are now keyed by owner ID)
+        String ownerID = auth.getUid();
+        if (ownerID == null) {
+            Log.e("Model.deleterProductItem", "User not authenticated");
+            return;
+        }
+        
+        storesRef.child(ownerID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Store store=snapshot.getValue(Store.class);
-                store.products.remove(positon);
-                storesRef.child(storeName).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                    }
-                });;
-
+                Store store = snapshot.getValue(Store.class);
+                if (store != null && store.products != null && positon < store.products.size()) {
+                    store.products.remove(positon);
+                    storesRef.child(ownerID).setValue(store).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.e("Model.deleterProductItem", "Failed to delete product: " + (task.getException() != null ? task.getException().getMessage() : "Unknown error"));
+                            }
+                        }
+                    });
                 }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("Model.deleterProductItem", "Database error: " + error.getMessage());
             }
         });
-
-
     }
 
 

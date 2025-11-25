@@ -93,30 +93,40 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonManageProducts"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:text="Manage Products"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:minHeight="56dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         app:backgroundTint="@color/primary_color"
                         app:cornerRadius="8dp"
                         app:icon="@drawable/ic_inventory"
                         app:iconGravity="textStart"
-                        app:iconPadding="8dp" />
+                        app:iconPadding="6dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonViewOrders"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:text="View Orders"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:minHeight="56dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         app:backgroundTint="@color/accent_color"
                         app:cornerRadius="8dp"
                         app:icon="@drawable/ic_orders"
                         app:iconGravity="textStart"
-                        app:iconPadding="8dp" />
+                        app:iconPadding="6dp" />
 
                 </LinearLayout>
 
@@ -124,28 +134,59 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonAddProduct"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:text="Add Product"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:minHeight="56dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         app:backgroundTint="@color/success_color"
                         app:cornerRadius="8dp"
                         app:icon="@drawable/ic_add"
                         app:iconGravity="textStart"
-                        app:iconPadding="8dp" />
+                        app:iconPadding="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="Profile"
+                        android:textSize="12sp"
+                        android:minHeight="56dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        app:backgroundTint="@color/accent_color"
+                        app:cornerRadius="8dp"
+                        app:icon="@drawable/ic_inventory"
+                        app:iconGravity="textStart"
+                        app:iconPadding="6dp" />
+
+                </LinearLayout>
+
+                <!-- Third Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonLogout"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
                         android:text="Logout"
                         android:textSize="14sp"
                         app:backgroundTint="@color/error_color"

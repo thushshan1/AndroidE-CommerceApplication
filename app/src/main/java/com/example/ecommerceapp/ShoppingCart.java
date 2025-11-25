@@ -25,23 +25,45 @@ public class ShoppingCart extends AppCompatActivity {
         setContentView(R.layout.activity_shopping_cart);
         recyclerView = (RecyclerView)findViewById(R.id.rv_store);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Button checkout=(Button)findViewById(R.id.checkout);
+        
+        // Set up toolbar back button
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+            }
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
+        
+        Button checkout = findViewById(R.id.checkout);
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo: generate order from cart
-                if (!UserCart.getCart().getOrderList().isEmpty()) {
-                    Model.getInstance().saveOrders(UserCart.getCart());
+                String currentUserID = com.google.firebase.auth.FirebaseAuth.getInstance().getUid();
+                if (currentUserID == null) {
+                    Toast.makeText(ShoppingCart.this, "User not logged in", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                Cart cart = UserCart.getCart(currentUserID);
+                if (cart != null && cart.getOrderList() != null && !cart.getOrderList().isEmpty()) {
+                    Model.getInstance().saveOrders(cart);
                     Toast.makeText(ShoppingCart.this, "Order created!", Toast.LENGTH_LONG).show();
 
-                    //clear cart of current user;
+                    // Clear cart of current user
                     UserCart.clearCart();
                     startActivity(new Intent(ShoppingCart.this, CustomerDashboardActivity.class));
-
+                    finish();
                 } else {
-                    Toast.makeText(ShoppingCart.this, "Cart is empty!Fail to check out", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ShoppingCart.this, "Cart is empty! Cannot checkout", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
@@ -52,24 +74,42 @@ public class ShoppingCart extends AppCompatActivity {
 //                startActivity(new Intent(ShoppingCart.this, CustomerStoreView2.class));
 //            }
 //        });
-        Cart cart=UserCart.getCart();
+        // Get current user ID
+        String currentUserID = com.google.firebase.auth.FirebaseAuth.getInstance().getUid();
+        if (currentUserID == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        
+        // Initialize cart for current user
+        Cart cart = UserCart.getCart(currentUserID);
+        if (cart == null) {
+            cart = new Cart();
+            UserCart.getCart(currentUserID); // This will create and store the cart
+        }
+        
         UserCart.setOrderList();
-//        List<Cart.OrderDataStore> orderdata = new ArrayList<Cart.OrderDataStore>();
-//        Cart.OrderDataStore order = new Cart.OrderDataStore();
-//        order.setStoreName("test");
-//
-//        Cart.OrderDataStore.orderDetail detail = new Cart.OrderDataStore.orderDetail();
-//        detail.setBrand("abc");
-//        detail.setProductName("name");
-//        detail.setCount("100");
-//        detail.setPurl("https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F90946%2Fpexels-photo-90946.jpeg%3Fcs%3Dsrgb%26dl%3Dpexels-math-90946.jpg%26fm%3Djpg&tbnid=Wmnu3T05GveSeM&vet=12ahUKEwi18-Ti88aAAxXch-4BHb6EDlUQMygAegUIARDxAQ..i&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fproduct%2F&docid=nMjIODhQZ_AKUM&w=4314&h=2857&q=product%20pic&ved=2ahUKEwi18-Ti88aAAxXch-4BHb6EDlUQMygAegUIARDxAQ");
-//        detail.setPrice("12");
-//        order.getCartlist().add(detail);
+        
+        // Check if cart has items
+        if (cart.getOrderList() == null || cart.getOrderList().isEmpty()) {
+            // Show empty cart message
+            findViewById(R.id.emptyCartCard).setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.emptyCartCard).setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            adaptor = new ShoppingCartAdaptor(cart.getOrderList());
+            recyclerView.setAdapter(adaptor);
+        }
 
-//        orderdata.add(order);
-        adaptor = new ShoppingCartAdaptor(cart.getOrderList());
-        recyclerView.setAdapter(adaptor);
-
+    }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Smooth fade transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 }

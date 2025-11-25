@@ -41,7 +41,20 @@ public class OrderHistoryActivity extends AppCompatActivity implements View.OnCl
         initializeViews();
         setupChips();
         setupRecyclerView();
+        setupBackButton();
         loadOrders();
+    }
+    
+    private void setupBackButton() {
+        View backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     private void initializeViews() {
@@ -93,34 +106,50 @@ public class OrderHistoryActivity extends AppCompatActivity implements View.OnCl
                                     }
                                 }
                             }
-                            // If no orders found, use sample data
-                            if (allOrders.isEmpty()) {
-                                createSampleOrders();
-                            }
+                            // No orders found - show empty state
                             filterOrders(currentFilter);
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.e("OrderHistoryActivity", "Failed to load orders: " + error.getMessage());
-                            createSampleOrders(); // Fallback to sample data
                             filterOrders(currentFilter);
                         }
                     });
         } else {
-            createSampleOrders(); // Fallback to sample data
-            filterOrders(currentFilter);
-        }
-    }
+            // No user ID from intent - try to get from Firebase Auth
+            String uid = FirebaseAuth.getInstance().getUid();
+            if (uid != null) {
+                // Retry with current user ID
+                FirebaseDatabase.getInstance().getReference("orders")
+                        .orderByChild("userID")
+                        .equalTo(uid)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                allOrders.clear();
+                                if (snapshot.exists()) {
+                                    for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                                        Order order = orderSnapshot.getValue(Order.class);
+                                        if (order != null) {
+                                            order.setOrderID(orderSnapshot.getKey());
+                                            allOrders.add(order);
+                                        }
+                                    }
+                                }
+                                filterOrders(currentFilter);
+                            }
 
-    private void createSampleOrders() {
-        allOrders.clear();
-        
-        // Sample orders
-        allOrders.add(new Order("12345", "Dec 15, 2024", "Tech Store", "iPhone 15 Pro, AirPods Pro", 1299.99, "pending"));
-        allOrders.add(new Order("12346", "Dec 14, 2024", "Fashion Store", "Nike Air Max, T-Shirt", 199.99, "completed"));
-        allOrders.add(new Order("12347", "Dec 13, 2024", "Book Store", "Programming Book, Notebook", 89.99, "shipped"));
-        allOrders.add(new Order("12348", "Dec 12, 2024", "Electronics Store", "Laptop, Mouse", 1299.99, "cancelled"));
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("OrderHistoryActivity", "Failed to load orders: " + error.getMessage());
+                                filterOrders(currentFilter);
+                            }
+                        });
+            } else {
+                filterOrders(currentFilter);
+            }
+        }
     }
 
     private void filterOrders(String filter) {
@@ -197,5 +226,12 @@ public class OrderHistoryActivity extends AppCompatActivity implements View.OnCl
         } else {
             Toast.makeText(this, "Order information not available for tracking", Toast.LENGTH_SHORT).show();
         }
+    }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Smooth fade transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
